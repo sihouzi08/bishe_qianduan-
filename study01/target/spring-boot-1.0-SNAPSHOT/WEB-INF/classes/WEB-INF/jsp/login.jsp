@@ -16,7 +16,10 @@
 
     <script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">
-
+        if(window.top.location.href!=location.href)
+            {
+                window.top.location.href=location.href;
+            }
 
 
     </script>

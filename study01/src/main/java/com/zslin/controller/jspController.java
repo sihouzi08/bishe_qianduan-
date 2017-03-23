@@ -133,11 +133,6 @@ public class jspController {
         logger.info("yudingdan_jsp_test");
         return "yudingdan";
     }
-    @RequestMapping("/exit")
-    public String exit_jsp_test(){
-        logger.info("exit_jsp_test");
-        return "exit";
-    }
 
 
 }

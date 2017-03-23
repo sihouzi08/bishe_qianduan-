@@ -28,9 +28,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * Shiro测试Controller
  *
- * @author   单红宇(365384722)
- * @myblog  http://blog.csdn.net/catoop/
- * @create    2016年1月13日
+ * @author   ClownMonkey(87406054)
+ * @myblog
+ * @create    2016年12月13日
  */
 @Controller
 public class ShiroController {
@@ -84,7 +84,7 @@ public class ShiroController {
         //验证是否登录成功  
         if(currentUser.isAuthenticated()){  
             logger.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-            return "redirect:/user";
+            return "redirect:/indexmain";
         }else{  
             token.clear();  
             return "redirect:/login";
@@ -96,7 +96,7 @@ public class ShiroController {
 		//使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();  
         redirectAttributes.addFlashAttribute("message", "您已安全退出");  
-        return "/exit";
+        return "/login";
     } 
 	
 	@RequestMapping("/403")

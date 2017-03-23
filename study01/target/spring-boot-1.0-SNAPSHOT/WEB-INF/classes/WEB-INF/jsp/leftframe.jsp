@@ -123,7 +123,7 @@
         <li> <a class="head">大数据test</a>
             <ul>
                 <li><a href="/lookliuyan" target="rightFrame">各种数据统计</a></li>
-                <li><a href="/checkliuyan" target="rightFrame">动态表单test</a></li>
+                <li><a href="/testtubiao" target="rightFrame">动态表单test</a></li>
             </ul>
         </li>
         <li> <a class="head">友情链接管理</a>

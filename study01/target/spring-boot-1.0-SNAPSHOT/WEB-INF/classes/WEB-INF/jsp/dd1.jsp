@@ -30,7 +30,7 @@
 
 <body>
 <input type="button" onclick="setUrl('index.jsp')" value="baidu">
-<input type="button" onclick="setUrl('www.sohu.com')" value="sohu"
+<input type="button" onclick="setUrl('www.sohu.com')" value="sohu">
 <iframe src="" id="ifrTest"  ></iframe>
 
 </body>

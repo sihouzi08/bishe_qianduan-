@@ -37,27 +37,22 @@
             case 1:
                 showText =  "欢迎使用“广商淘”后台管理系统!";
                 document.getElementById("manFrame").src = url;
-                alert(a);
                 break;
             case 2:
-                showText =  "system setting!";
+                showText =  "Show The Shop!";
                 document.getElementById("manFrame").src = url;
-                alert(a);
                 break;
             case 3:
-                showText =  "User Manage";
+                showText =  "Show The User";
                 document.getElementById("manFrame").src = url;
-                alert(a);
                 break;
             case 4:
-                showText =  "Chanage Manage";
+                showText =  "Show The Order";
                 document.getElementById("manFrame").src = url;
-                alert(a);
                 break;
             case 5:
-                showText =  "Ad AND news!";
+                showText =  "Show The Messages!";
                 document.getElementById("manFrame").src = url;
-                alert(a);
                 break;
         }
         getObject('show_text').innerHTML = showText;
@@ -84,7 +79,7 @@
 
 <body style="height: 100%">
 <div id="nav">
-    <ul><li id="man_nav_1" onclick="list_sub_nav(id,'管理首页','/manframe')"  class="bg_image_onclick">管理首页</li><li id="man_nav_2" onclick="list_sub_nav(id,'商品查看','/dd2')"  class="bg_image">商品查看</li><li id="man_nav_3" onclick="list_sub_nav(id,'账户管理','/dd3')"  class="bg_image">账户管理</li><li id="man_nav_4"  onclick="list_sub_nav(id,'系统管理','/dd4')"  class="bg_image">系统管理</li><li id="man_nav_5"  onclick="list_sub_nav(id,'公告消息','/ddd')"  class="bg_image">公告消息</li></ul>
+    <ul><li id="man_nav_1" onclick="list_sub_nav(id,'管理首页','/manframe')"  class="bg_image_onclick">管理首页</li><li id="man_nav_2" onclick="list_sub_nav(id,'商品查看','/dd2')"  class="bg_image">商品查看</li><li id="man_nav_3" onclick="list_sub_nav(id,'账户管理','/dd3')"  class="bg_image">账户管理</li><li id="man_nav_4"  onclick="list_sub_nav(id,'订单管理','/dd4')"  class="bg_image">订单管理</li><li id="man_nav_5"  onclick="list_sub_nav(id,'评论管理','/ddd')"  class="bg_image">评论管理</li></ul>
 
 
 </div>

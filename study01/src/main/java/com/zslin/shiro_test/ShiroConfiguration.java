@@ -23,9 +23,9 @@ import java.util.Map;
 /**
  * Shiro 配置
  *
- * @author   单红宇(365384722)
- * @myblog  http://blog.csdn.net/catoop/
- * @create    2016年1月13日
+ * @author   ClownMonkey(87406054)
+ * @myblog
+ * @create    2016年12月13日
  */
 @Configuration
 public class ShiroConfiguration {
@@ -51,8 +51,8 @@ public class ShiroConfiguration {
 	 *
 	 * @param dispatcherServlet
 	 * @return
-	 * @author SHANHY
-	 * @create  2016年1月13日
+	 * @author  ClownMonkey
+	 * @create  2016年12月13日
 	 */
 	@Bean
 	public FilterRegistrationBean filterRegistrationBean() {
@@ -96,7 +96,7 @@ public class ShiroConfiguration {
 	/**
 	 * 加载shiroFilter权限控制规则（从数据库读取然后配置）
 	 *
-	 * @author SHANHY
+	 * @author  ClownMonkey
 	 * @create  2016年1月14日
 	 */
 	private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean){
@@ -125,8 +125,8 @@ public class ShiroConfiguration {
 	 * @param stuService
 	 * @param scoreDao
 	 * @return
-	 * @author SHANHY
-	 * @create  2016年1月14日
+	 * @author ClownMonkey
+	 * @create  2016年12月14日
 	 */
 	@Bean(name = "shiroFilter")
 	public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
