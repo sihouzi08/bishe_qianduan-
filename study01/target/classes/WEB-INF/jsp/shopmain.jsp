@@ -112,16 +112,16 @@
 
 
         //显示商品详情调用模态框
-        function detail(name, shopid, shop_status, des, price) {
+        function detail(name, shopid, shop_status, des, price,userName,picture,userphne) {
             var shop_status = shop_status == "0" ? "下架" : "上架";
             document.getElementById("ShopName").innerHTML = name;
             document.getElementById("Des").innerHTML = des;
             document.getElementById("price").innerHTML = price;
             document.getElementById("shopid").innerHTML = shopid;
-
+            document.getElementById("userName0").innerHTML = userName;
             document.getElementById("shop_status").innerHTML = shop_status;
-
-
+            document.getElementById("picture0").innerHTML = picture;
+            document.getElementById("userphne0").innerHTML = userphne;
             $('#myModal').modal('show');
         }
 
@@ -148,17 +148,18 @@
 
 
         //显示商品修改调用模态框
-        function change(name, shopid, shop_status, price,des,userName,userphne,categoryid) {
+        function change(name, shopid, shop_status, price,des,userName,userphne,categoryid,picture) {
 
             document.getElementById("shopid2").innerHTML = shopid;
-
+            $("#shop_status").val(shop_status);
             $("#shopesName").val(name);//jquery通过id属性并修改value属性为name
-
+            $("#picture").val(picture);
             $("#shopesPrice").val(price);//jquery通过id属性并修改value属性为price
             $("#_des").val(des);
             $("#userName").val(userName);
             $("#userphne").val(userphne);
             $("#categoryid").val(categoryid);
+            $("#shop_status2").val(shop_status);
             $('#myModal2').modal('show');
         }
 
@@ -189,14 +190,16 @@
                         var c5 = row.insertCell(4);
                         c5.innerHTML = shop_status;
                         var c6 = row.insertCell(5);
-                        c6.innerHTML = p[i].picture;
-                        var c7 = row.insertCell(6);
+                        c6.innerHTML = p[i].userName;
+                        var c8 = row.insertCell(6);
+                        c8.innerHTML = p[i]._category.category
+                        var c7 = row.insertCell(7);
                         c7.innerHTML = "<a href='#' title='修改商品'"
-                                + "onclick=\"change('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].price + "','" + p[i].des + "','" + p[i].userName + "','" + p[i].userphne + "','" + p[i].category_id + "')\">"
+                                + "onclick=\"change('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].price + "','" + p[i].des + "','" + p[i].userName + "','" + p[i].userphne + "','" + p[i].category_id + "','" + p[i].picture + "')\">"
                                 + "<span class='glyphicon glyphicon-cog'></span>"
                                 + "</a>"
                                 + "<a href='#' title='商品详情'"
-                                + "onclick=\"detail('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].des + "','" + p[i].price + "')\">"
+                                + "onclick=\"detail('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].des + "','" + p[i].price + "','" + p[i].userName + "','" + p[i].picture + "','" + p[i].userphne + "')\">"
                                 + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
                                 + "</a>"
                                 + "<a href='#' title='商品下架'"
@@ -235,8 +238,22 @@
 //        }
         function check() {
             msg = '是否将' + name + '下架？';
-            var name, shopid, shop_status, des, price,userName,userphne,category_id;
+            var isphone = /^(13[0-9]|14(5|7)|15(0|1|2|3|5|6|7|8|9)|18[0-9])\d{8}$/;
+            var categoryid = /^[1-4]$/;
+            var isshop_status = /^[0-1]$/;
+            var name, shopid, shop_status, des, price,userName,userphne,category_id,picture;
             if (confirm(msg)) {
+                if(isphone.test(document.getElementById("userphne").value)){
+                    userphne = document.getElementById("userphne").value;
+                }else if (document.getElementById("userphne").value == "") {
+                    alert("请输入userphne！");
+                    document.forms.amendShopesForm.userphne.focus();
+                    return false;
+                } else {
+                    document.forms.amendShopesForm.userphne.focus();
+                    alert('你所输入的不是手机号码');
+                    return false;
+                }
             if (document.getElementById("_des").value == "") {
                 alert("请输入shuoming！");
                 document.forms.amendShopesForm._des.focus();
@@ -252,33 +269,52 @@
                     document.forms.amendShopesForm.userName.focus();
                     return false;
                 }
-                if (document.getElementById("userphne").value == "") {
-                    alert("请输入userphne！");
-                    document.forms.amendShopesForm.userphne.focus();
-                    return false;
-                }
+
                 if (document.getElementById("categoryid").value == "") {
                     alert("请输入categoryid！");
                     document.forms.amendShopesForm.categoryid.focus();
                     return false;
+                }else if (categoryid.test(document.getElementById("categoryid").value)) {
+                    category_id = document.getElementById("categoryid").value;
+                }else{
+                    alert("你的categoryid选择有误，请重新选择");
+                    document.forms.amendShopesForm.categoryid.focus();
+                    return false;
                 }
+                if (document.getElementById("shop_status2").value == "") {
+                    alert("请输入shop_status2！");
+                    document.forms.amendShopesForm.shop_status2.focus();
+                    return false;
+                }else if (isshop_status.test(document.getElementById("shop_status2").value)) {
+                    shop_status = document.getElementById("shop_status2").value;
+                }else {
+                    alert("你的shop_status2选择有误，请重新选择");
+                    document.forms.amendShopesForm.shop_status2.focus();
+                    return false;
+                }
+                if (document.getElementById("shopesName").value == "") {
+                    alert("请输入shopesName！");
+                    document.forms.amendShopesForm.shopesName.focus();
+                    return false;
+                }
+                picture= document.getElementById("picture").value;
+                name = document.getElementById("shopesName").value;
             des = document.getElementById("_des").value;
             price = document.getElementById("shopesPrice").value;
             shopid = document.getElementById("shopid2").innerHTML;
+
                 userName = document.getElementById("userName").value;
-                userphne = document.getElementById("userphne").value;
-                category_id = document.getElementById("categoryid").value;
 
 //            alert(shopid + "--" + des + "--" + price);
             var jsonput={
-                "shopname": "a",
+                "shopname": name,
                 "des": des,
                 "userName": userName,
                 "category_id":category_id,
                 "userphne": userphne,
-                "picture": "u.jpg",
+                "picture": picture,
                 "price": price,
-                "shop_status": "1"
+                "shop_status":shop_status
             };
             $.ajax({
                 url: "http://101.200.56.75/shop/update/"+shopid,
@@ -292,11 +328,13 @@
                     p=res.payload;
 //                    alert(p.shopid + "-----success")
 //
-                     alert("回---调---调---试")
+                     alert("回---调---调---试");
+                     $('#myModal2').modal('toggle')
+                     remond('0',default_size,default_sort);
                 }
             })
             }
-            alert("check()--调---试")
+//            alert("check()--调---试")
         }
 
 
@@ -342,9 +380,10 @@
                         <th class="tableCenter">商品序号</th>
                         <th class="tableCenter">商品名称</th>
                         <th class="tableCenter">商品简介</th>
-                        <th class="tableCenter">商品价格</th>
-                        <th class="tableCenter">是否推荐</th>
+                        <th class="tableCenter">商品价格(元)</th>
                         <th class="tableCenter">商品状态</th>
+                        <th class="tableCenter">上传者</th>
+                        <th class="tableCenter">所属种类</th>
                         <th class="tableCenter">操作</th>
                     </tr>
 
@@ -420,6 +459,14 @@
                         </h3>
                         <p><span id="ShopName"></span></p>
                         <h3>
+                           上传者名字：
+                        </h3>
+                        <p><span id="userName0"></span></p>
+                        <h3>
+                            上传者电话：
+                        </h3>
+                        <p><span id="userphne0"></span></p>
+                        <h3>
                             商品状态：
                         </h3>
                         <p><span id="shop_status"></span></p>
@@ -428,8 +475,12 @@
                         <p>
                             <span id="Des"></span>
                         </p>
+                        <h3>商品图片：</h3>
+                        <p>
+                            <span id="picture0"></span>
+                        </p>
                         <h3>
-                            菜品价格： <span id="price"> </span> (元)
+                            商品价格： <span id="price"> </span> (元)
                         </h3>
                     </div>
                 </div>
@@ -521,14 +572,23 @@
                                 <div style="color: red;float: right;"></div>
                             </div>
                             <div class="form-group">
+                                <label for="picture"
+                                       class="col-sm-2 control-label">图&nbsp;&nbsp;&nbsp;&nbsp;片:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="picture" name="picture"
+                                           placeholder="请输入picture" value="" readonly>
+                                </div>
+                                <div style="color: red;float: right;">图片由前端指定后，不能修改</div>
+                            </div>
+                            <div class="form-group">
                                 <label for="categoryid"
                                        class="col-sm-2 control-label">种&nbsp;&nbsp;&nbsp;&nbsp;类:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="categoryid" name="categoryid"
-                                           placeholder="请输入categoryid" value=""
+                                           placeholder="请从下面选择categoryid" value=""
                                     >
                                     <select name="s1" onchange="ch3()">
-                                        <option value="0" selected="selected">请选择</option>
+                                        <option value="" selected="selected">请选择</option>
                                         <option value=1>运动</option>
 
                                         <option value=2>电子</option>
@@ -548,20 +608,35 @@
                                 <div style="color: red;float: right;"></div>
                             </div>
                             <div class="form-group">
-                                <label for="shop_status2" class="col-sm-2 control-label"></label>
+                                <label for="shop_status2"
+                                       class="col-sm-2 control-label">状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
                                 <div class="col-sm-10">
-                                    <input type="checkbox" name="shop_status2" id="shop_status2"
-                                           value=""/>
-                                    <span style="font-size: 16px;font-weight: bold;">推荐商品</span>
+                                    <input type="text" class="form-control" id="shop_status2" name="shop_status2"
+                                           placeholder="请从下面选择shop_status2" value=""
+                                    >
+                                    <select name="s2" onchange="ch2()">
+                                        <option value="" selected="selected">请选择状态</option>
+                                        <option value=0>0代表下架</option>
+                                        <option value=1>1代表上架</option>
+                                    </select>
+
+                                    <script type="text/javascript">
+                                        function ch2(){
+                                            var s2 = document.getElementsByName("s2")[0];
+                                            $("#shop_status2").val(s2.value);
+                                            alert('you choice:' + s2.value);
+                                        }
+                                    </script>
                                 </div>
-                                <div style="color: red;float: right;" id="priceerror"></div>
+
+                                <div style="color: red;float: right;"></div>
                             </div>
                             <%--<input type="hidden" value="<%=request.getParameter("id")%>" id="dishesId" name="dishesId"/>--%>
                             <%--<input type="hidden" value="<%=request.getParameter("dishesImg")%>" id="dishesImg"--%>
                             <%--name="dishesImg"/>--%>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <input type="submit" class="btn btn-primary" id="addbtu" value="确认修改"
+                                    <input type="button" class="btn btn-primary" id="addbtu" value="确认修改"
                                            onclick="check()"/>
                                 </div>
                             </div>

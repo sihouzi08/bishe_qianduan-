@@ -53,7 +53,7 @@
 
         window.onload =function() {
             remond(0,default_size,default_sort)
-            alert("users()")
+//            alert("users()")
         }
         function startTime()
         {
@@ -174,7 +174,120 @@
 
             $('#myModal').modal('show');
         }
+        //显示商品修改调用模态框," + p[i].userName + "','" + p[i].userid + "','" + p[i].password + "','" + p[i].email + "','" + p[i].school'" + p[i].userstatus + "','" + p[i].court + "','" + p[i].professional + "','" + p[i].phone + "')\">"
+        function change(userName, userid, password, email,school,userstatus,court,professional,phone) {
 
+            document.getElementById("userid2").innerHTML = userid;
+//
+            $("#userName2").val(userName);//jquery通过id属性并修改value属性为name
+//
+            $("#password2").val(password);//jquery通过id属性并修改value属性为price
+            $("#email2").val(email);
+            $("#school2").val(school);
+            $("#court2").val(court);
+            $("#professional2").val(professional);
+            $("#userstatus").val(userstatus);
+            $("#phone2").val(phone);
+            $('#myModal2').modal('show');
+        }
+
+        function check() {
+            msg = '是否将' + name + '下架？';
+            var isphone = /^(13[0-9]|14(5|7)|15(0|1|2|3|5|6|7|8|9)|18[0-9])\d{8}$/;
+            var isuserstatus = /^[0-1]$/;
+            var userName, userid, password, userstatus, email,court,school,professional,phone;
+            if (confirm(msg)) {
+                if (document.getElementById("userName2").value == "") {
+                    alert("请输入userName2！");
+                    document.forms.amendShopesForm.userName2.focus();
+                    return false;
+                }
+                if (document.getElementById("password2").value == "") {
+                    alert("请输入菜品password2！");
+                    document.forms.amendShopesForm.password2.focus();
+                    return false;
+                }
+                if (document.getElementById("email2").value == "") {
+                    alert("请输入email2！");
+                    document.forms.amendShopesForm.email2.focus();
+                    return false;
+                }
+                if (document.getElementById("school2").value == "") {
+                    alert("请输入school2！");
+                    document.forms.amendShopesForm.school2.focus();
+                    return false;
+                }
+                if (document.getElementById("court2").value == "") {
+                    alert("请输入court2！");
+                    document.forms.amendShopesForm.court2.focus();
+                    return false;
+                }
+                if (document.getElementById("professional2").value == "") {
+                    alert("请输入professional2！");
+                    document.forms.amendShopesForm.professional2.focus();
+                    return false;
+                }
+                if (document.getElementById("userstatus").value == "") {
+                    alert("请输入userstatus！");
+                    document.forms.amendShopesForm.userstatus.focus();
+                    return false;
+                }else if (isuserstatus.test(document.getElementById("userstatus").value)) {
+                    userstatus = document.getElementById("userstatus").value;
+                }else {
+                    alert("你的shop_status2选择有误，请重新选择");
+                    document.forms.amendShopesForm.userstatus.focus();
+                    return false;
+                }
+                if(isphone.test(document.getElementById("phone2").value)){
+                    phone = document.getElementById("phone2").value;
+                }else if (document.getElementById("phone2").value == "") {
+                    alert("请输入userphne！");
+                    document.forms.amendShopesForm.phone2.focus();
+                    return false;
+                } else {
+                    document.forms.amendShopesForm.phone2.focus();
+                    alert('你所输入的不是手机号码');
+                    return false;
+                }
+                userName = document.getElementById("userName2").value;
+                password = document.getElementById("password2").value;
+                userid = document.getElementById("userid2").innerHTML;
+                email = document.getElementById("email2").value;
+                court = document.getElementById("court2").value;
+                school = document.getElementById("school2").value;
+                professional = document.getElementById("professional2").value;
+
+//            shop_status =
+                alert(userid + "--" + userName + "--" + school);
+                var jsonput={
+                    "userid": userid,
+                    "userName": userName,
+                    "password": password,
+                    "userstatus": userstatus,
+                    "email": email,
+                    "court": court,
+                    "school": school,
+                    "professional": professional,
+                    "phone": phone
+                };
+                $.ajax({
+                    url: "http://101.200.56.75/users/update/"+userid,
+                    type: "PUT",
+                    data:JSON.stringify(jsonput),
+                    dataType: 'json',
+                    contentType:"application/json; charset=utf-8",
+                    processData:false,
+                    cache:false,
+                    success: function (res) {
+                        p=res.payload;
+                        alert("回---调---调---试");
+                        $('#myModal2').modal('toggle')
+                        remond('0',default_size,default_sort);
+                    }
+                })
+            }
+            alert("check()--调---试")
+        }
         function remond(page,size,sort,operation,key,value) {
             $.ajax({
                 url: "http://101.200.56.75/users/userspage?page="+page+"&size="+size+"&sort="+sort+"&operation="+operation+"&key="+key+"&value="+value,
@@ -288,7 +401,7 @@
     <div class="operate">
         <div class="pull-right">
             <ul class="nav_return">
-                <li> 现在时间:[*<a href="#" id="txt"> </a>*]</li><li>[ <a href="#" onclick="javascrtpt:window.location.href='http://www.baidu.com'"><span class='glyphicon glyphicon-home'></span>&nbsp;点击返回主页</a> ]</li>
+                <li> 现在时间:[*<a href="/time" id="txt"> </a>*]</li><li>[ <a href="/indexmain"><span class='glyphicon glyphicon-home'></span>&nbsp;点击返回主页</a> ]</li>
             </ul>
         </div>
     </div>
@@ -501,20 +614,35 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="shop_status2" class="col-sm-2 control-label"></label>
+                                <label for="userstatus"
+                                       class="col-sm-2 control-label">状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
                                 <div class="col-sm-10">
-                                    <input type="checkbox" name="shop_status2" id="shop_status2"
-                                           value=""/>
-                                    <span style="font-size: 16px;font-weight: bold;">推荐商品</span>
+                                    <input type="text" class="form-control" id="userstatus" name="userstatus"
+                                           placeholder="请从下面选择shop_status2" value=""
+                                    >
+                                    <select name="s2" onchange="ch2()">
+                                        <option value="" selected="selected">请选择用户状态</option>
+                                        <option value=0>0代表黑用户</option>
+                                        <option value=1>1正常用户</option>
+                                    </select>
+
+                                    <script type="text/javascript">
+                                        function ch2(){
+                                            var s2 = document.getElementsByName("s2")[0];
+                                            $("#userstatus").val(s2.value);
+                                            alert('you choice:' + s2.value);
+                                        }
+                                    </script>
                                 </div>
-                                <div style="color: red;float: right;" id="priceerror"></div>
+
+                                <div style="color: red;float: right;"></div>
                             </div>
                             <%--<input type="hidden" value="<%=request.getParameter("id")%>" id="dishesId" name="dishesId"/>--%>
                             <%--<input type="hidden" value="<%=request.getParameter("dishesImg")%>" id="dishesImg"--%>
                             <%--name="dishesImg"/>--%>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <input type="submit" class="btn btn-primary" id="addbtu" value="确认修改"
+                                    <input type="button" class="btn btn-primary" id="addbtu" value="确认修改"
                                            onclick="check()"/>
                                 </div>
                             </div>

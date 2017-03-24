@@ -60,7 +60,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
+                        onclick="javascrtpt:window.location.href='/indexmain'">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">帮助信息</h4>
@@ -71,8 +71,6 @@
                         <h3 class="panel-title">帮助详情</h3>
                     </div>
                     <div class="panel-body">
-
-
                         <p>
                         <h2 style="text-align: center;">
                             Time： <span id="timeid"></span>
@@ -88,9 +86,9 @@
                         <h3>
                             系统信息：<h4><span>系统所用技术：springboot,js,kong api gateway,jpa,sql</span></h4>
                         </h3>
-                        <h3>网站信息： <h4><span>网址：http://101.200.56.75:8181/indexmain</span></h4></h3>
+                        <h3>网站信息： <h4><span>网址：http://101.200.56.75:8888/indexmain</span></h4></h3>
                         <h3>
-                            使用帮助： <h4><span>①登录系统②然后按字眼操作③不懂往下看</span></h4>
+                            使用帮助： <h4><span>①登录系统②然后按字眼操作③不懂找客服</span></h4>
                         </h3>
                         <h3>
                             客服QQ： <h4><span>87406054</span></h4>

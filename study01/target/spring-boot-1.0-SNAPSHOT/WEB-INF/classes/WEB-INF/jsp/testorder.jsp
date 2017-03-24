@@ -57,7 +57,7 @@
 
         window.onload = function () {
             remond('0',default_size,default_sort);
-            alert("kuayu()")
+//            alert("kuayu()")
         };
 
         function startTime()
@@ -263,11 +263,11 @@
 
 //                    addElementLiEnd("pager",operation,key,value);
 
-                    alert("remond()")
+//                    alert("remond()")
                 }
 
             });
-            alert("remond()kuayu()")
+//            alert("remond()kuayu()")
         }
 
 
@@ -292,10 +292,9 @@
             $("#userName2").val(userid+","+userName);
             $("#shopname2").val(shopid+","+shopname);
 //            $("#professional2").val(userName);
-
+            $("#paystate").val(paystate);
             $('#myModal2').modal('show');
         }
-
 
 
 
@@ -311,7 +310,6 @@
 
 
 
-
         //        {
         //            "ordertime": "2016-10-16 16:46:08",
         //            "paystate": 1,
@@ -320,56 +318,136 @@
         //            "userid": 4,
         //            "shopid": 6
         //        }
+        var controll1=0,controll2=0;
+        var userNameid,shopnameid;
+        var ordertime, orderid, paystate, moneySum,amount;
         function check() {
-            msg = '是否将' + name + '下架？';
-            var ordertime, orderid, paystate, moneySum,amount,shopname,userName;
-            if (confirm(msg)) {
-                if (document.getElementById("ordertime2").value == "") {
-                    alert("请输入ordertime2！");
-                    document.forms.amendShopesForm.ordertime2.focus();
-                    return false;
-                }
-                if (document.getElementById("moneySum2").value == "") {
-                    alert("请输入菜品moneySum2！");
-                    document.forms.amendShopesForm.moneySum2.focus();
-                    return false;
-                }
-                if (document.getElementById("amount2").value == "") {
-                    alert("请输入amount2！");
-                    document.forms.amendShopesForm.amount2.focus();
-                    return false;
-                }
+
+
+            var isupaystate = /^[0-1]$/;
+//            var isuserid =/^[1-9][0-9]*$/;
+
+            if (document.getElementById("moneySum2").value == "") {
+                alert("请输入菜品moneySum2！");
+                document.forms.amendShopesForm.moneySum2.focus();
+                return false;
+            }
+            if (document.getElementById("amount2").value == "") {
+                alert("请输入amount2！");
+                document.forms.amendShopesForm.amount2.focus();
+                return false;
+            }
+
+            if (document.getElementById("paystate").value == "") {
+                alert("请输入paystate！");
+                document.forms.amendShopesForm.paystate.focus();
+                return false;
+            }else if (isupaystate.test(document.getElementById("paystate").value)) {
+                paystate = document.getElementById("paystate").value;
+            }else {
+                alert("你的paystate选择有误，请重新选择");
+                document.forms.amendShopesForm.paystate.focus();
+                return false;
+            }
+            if( (controll1==0 && controll2==0)|| (controll1==1 && controll2==0) || (controll1==0 && controll2==1) ){
+//                    controll=2;
                 if (document.getElementById("userName2").value == "") {
-                    alert("请输入userName2！");
+                    alert("请输入userNameid！");
                     document.forms.amendShopesForm.userName2.focus();
                     return false;
+                }else {
+                    //...
+                    $.ajax({
+                        url: "http://101.200.56.75/users/username?username="+document.getElementById("userName2").value,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (res) {
+                            if(res.payload=="" || res.payload==null){
+                                controll1=0;
+                                alert(document.getElementById("userName2").value+"不存在，请重新输入userNameid！");
+                                document.forms.amendShopesForm.userName2.focus();
+
+                                return false;
+                            }else{
+                                p=res.payload;
+                                alert(p[0].userName + "-----存在")
+//                    remond();
+                                userNameid=p[0].userid;
+//                            alert("回---调---调---试"+userNameid)
+                                controll1=1;
+                            }
+                            if(controll1==1 && controll2==1){ dochange();}
+
+
+                        }
+                    })
+
                 }
                 if (document.getElementById("shopname2").value == "") {
                     alert("请输入shopname2！");
                     document.forms.amendShopesForm.shopname2.focus();
                     return false;
+                }else{
+                    $.ajax({
+                        url: "http://101.200.56.75/shop/shopname?shopname="+ document.getElementById("shopname2").value,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (res) {
+                            if(res.payload=="" || res.payload==null){
+                                controll2=0;
+                                alert(document.getElementById("shopname2").value+"不存在，请重新输入userNameid！");
+                                document.forms.amendShopesForm.userName2.focus();
+                                return false;
+                            }else{
+                                p=res.payload;
+                                alert(p[0].shopname + "-----存在")
+//                    remond();
+                                shopnameid=p[0].shopid;
+//                            alert("回---调---调---试"+userNameid)
+                                controll2=1;
+                            }
+
+                            if(controll1==1 && controll2==1){ dochange();}
+
+                        }
+                    })
+
                 }
-//                ordertime, orderid, paystate, moneySum,amount,shopname,userName;
-                ordertime = document.getElementById("ordertime2").value;
+
+
+            }
+
+
+        }
+
+        function dochange() {
+//            if(controll==1){
+            msg = '是否将' + name + '下架？';
+//            }
+            //                ordertime, orderid, paystate, moneySum,amount,shopname,userName;
+            if (confirm(msg)) {  ordertime = document.getElementById("ordertime2").value;
+//            if(controll==0){
+                controll1=0;
+                controll2=0;
                 moneySum = document.getElementById("moneySum2").value;
                 orderid = document.getElementById("orderid2").innerHTML;
                 amount = document.getElementById("amount2").value;
-                shopname = document.getElementById("shopname2").value;
-                userName = document.getElementById("userName2").value;
+
+//                userName = document.getElementById("userName2").value;
 //                userName = document.getElementById("professional2").value;
 //                phone = document.getElementById("phone2").value;
 //            shop_status =
-                alert(userid + "--" + userName + "--" + school);
+                alert(orderid + "--" + shopnameid + "--" + userNameid);
                 var jsonput = {
-                    "ordertime": "2016-10-16 16:46:08",
-                    "paystate": 1,
-                    "moneySum": 10,
-                    "amount": 13,
-                    "userid": 4,
-                    "shopid": 6
+                    "ordertime": ordertime,
+                    "paystate": paystate,
+                    "moneySum": moneySum,
+                    "amount": amount,
+                    "userid": userNameid,
+                    "shopid": shopnameid
                 };
                 $.ajax({
-                    url: "http://101.200.56.75/users/update/"+userid,
+                    url: "http://101.200.56.75/order/update/"+orderid,
                     type: "PUT",
                     data:JSON.stringify(jsonput),
                     dataType: 'json',
@@ -378,14 +456,18 @@
                     cache:false,
                     success: function (res) {
                         p=res.payload;
-                        alert(p.userid + "-----success")
-//                    remond();
-                        alert("回---调---调---试")
+                        alert(p.orderid + "-----success")
+//                        alert("回---调---调---试")
+                        remond('0',default_size,default_sort);
+                        $('#myModal2').modal('toggle')
                     }
                 })
             }
-            alert("check()--调---试")
+//            alert("check()--调---试")
+//        }
         }
+
+
 
     </script>
 
@@ -403,7 +485,7 @@
     <div class="operate">
         <div class="pull-right">
             <ul class="nav_return">
-                <li> 现在时间:[*<a href="#" id="txt"> </a>*]</li><li>[ <a href="#" onclick="javascrtpt:window.location.href='http://www.baidu.com'"><span class='glyphicon glyphicon-home'></span>&nbsp;点击返回主页</a> ]</li>
+                <li> 现在时间:[*<a href="/time" id="txt"> </a>*]</li><li>[ <a href="/indexmain"><span class='glyphicon glyphicon-home'></span>&nbsp;点击返回主页</a> ]</li>
             </ul>
         </div>
     </div>
@@ -506,6 +588,7 @@
     </div>
 </div>
 
+
 <%--修改商品详情的模态框--%>
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel2">
@@ -539,10 +622,10 @@
                                        class="col-sm-2 control-label">订单时间:</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="ordertime2"
-                                           value="  "
+                                           value="" readonly
                                            size="20" name="ordertime2" placeholder="请输入订单时间">
                                 </div>
-                                <div style="color: red;float: right;" id="nameerror"></div>
+                                <div style="color: red;float: right;" id="nameerror">由前端台下单后，不能修改</div>
                             </div>
 
                             <div class="form-group">
@@ -571,17 +654,8 @@
                                            value="  "
                                            name="userName2" placeholder="请输入下单的用户">
                                 </div>
-                                <%--<select name="s1" onchange="ch3()">--%>
-                                <%--<option value="0" selected="selected">请选择</option>--%>
-                                <%--</select>--%>
 
-                                <%--<script type="text/javascript">--%>
-                                <%--function ch3(){--%>
-                                <%--var s1 = document.getElementsByName("s1")[0];--%>
-                                <%--//                                        $("#categoryid").val("这是--2,电子");--%>
-                                <%--alert('you choice:' + s1.value);--%>
-                                <%--}--%>
-                                <%--</script>--%>
+
 
                             </div>
                             <div class="form-group">
@@ -592,26 +666,42 @@
                                            value="  "
                                            name="shopname2" placeholder="请输入下单的商品">
                                 </div>
+
                             </div>
 
 
 
 
                             <div class="form-group">
-                                <label for="shop_status2" class="col-sm-2 control-label"></label>
+                                <label for="paystate"
+                                       class="col-sm-2 control-label">状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
                                 <div class="col-sm-10">
-                                    <input type="checkbox" name="shop_status2" id="shop_status2"
-                                           value=""/>
-                                    <span style="font-size: 16px;font-weight: bold;">推荐商品</span>
+                                    <input type="text" class="form-control" id="paystate" name="paystate"
+                                           placeholder="请从下面选择paystate" value=""
+                                    >
+                                    <select name="s2" onchange="ch2()">
+                                        <option value="" selected="selected">请选择订单状态</option>
+                                        <option value=0>0代表未付款</option>
+                                        <option value=1>1正常已经付款</option>
+                                    </select>
+
+                                    <script type="text/javascript">
+                                        function ch2(){
+                                            var s2 = document.getElementsByName("s2")[0];
+                                            $("#paystate").val(s2.value);
+                                            alert('you choice:' + s2.value);
+                                        }
+                                    </script>
                                 </div>
-                                <div style="color: red;float: right;" id="priceerror"></div>
+
+                                <div style="color: red;float: right;"></div>
                             </div>
                             <%--<input type="hidden" value="<%=request.getParameter("id")%>" id="dishesId" name="dishesId"/>--%>
                             <%--<input type="hidden" value="<%=request.getParameter("dishesImg")%>" id="dishesImg"--%>
                             <%--name="dishesImg"/>--%>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <input type="submit" class="btn btn-primary" id="addbtu" value="确认修改"
+                                    <input type="button" class="btn btn-primary" id="addbtu" value="确认修改"
                                            onclick="check()"/>
                                 </div>
                             </div>
@@ -625,7 +715,6 @@
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

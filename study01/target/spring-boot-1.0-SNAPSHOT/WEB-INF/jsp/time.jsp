@@ -131,6 +131,9 @@
             context.stroke();
             context.restore();
         }
+        function back(){
+            window.history.back(-1);
+        }
     </script>
 </head>
 
@@ -144,7 +147,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
+                        onclick="back()">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">时间信息</h4>
