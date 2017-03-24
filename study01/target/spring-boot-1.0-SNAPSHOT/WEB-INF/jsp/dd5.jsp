@@ -20,7 +20,7 @@
             position: absolute;
             background-position: center center;
             background-size: cover;
-            background-image: url("/images/banner.jpg") !important;
+            background-image: url("/images/guangshang.jpg") !important;
             opacity: 0.9;
         }
         .fadeInUpBig {
@@ -44,8 +44,8 @@
 <div class="box fadeInUpBig" data-wow-delay="0.4s">
     <div class="container">
         <div class="header_top">
-            <h1>Welcome</h1>
-            <h2>to our education</h2>
+            <h2 style="color:red ">Welcome</h2>
+            <h3 style="color:red ">to Guangzhou College of Commerce </h3>
         </div>
     </div>
 </div>

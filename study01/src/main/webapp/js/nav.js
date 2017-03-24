@@ -1,21 +1,21 @@
-// µ¼º½À¸ÅäÖÃÎÄ¼ş
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 var outlookbar=new outlook();
 var t;
-t=outlookbar.addtitle('»ù±¾ÉèÖÃ','ÏµÍ³ÉèÖÃ',1)
-outlookbar.additem('²é¿´¸öÈË×ÊÁÏ',t,'profile.html')
-outlookbar.additem('ĞŞ¸Ä¸öÈË×ÊÁÏ',t,'reset_info.php')
-outlookbar.additem('¸ü¸ÄµÇÂ¼ÃÜÂë',t,'chanagepass.html')
+t=outlookbar.addtitle('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','ÏµÍ³ï¿½ï¿½ï¿½ï¿½',1)
+outlookbar.additem('ï¿½é¿´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',t,'profile.html')
+outlookbar.additem('ï¿½Ş¸Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',t,'reset_info.php')
+outlookbar.additem('ï¿½ï¿½ï¿½Äµï¿½Â¼ï¿½ï¿½ï¿½ï¿½',t,'chanagepass.html')
 
-t=outlookbar.addtitle('¹ã¸æÉèÖÃ','ÏµÍ³ÉèÖÃ',1)
-outlookbar.additem('µÇÂ¼ÎÄÑ§ÂÛÌ³',t,'../vbb/forumdisplay.php?s=320e689ffabc5daa0be8b02c284d9968&forumid=39')
-outlookbar.additem('·¢³öµç×ÓÓÊ¼ş',t,'mailto:pobear@newmail.dlmu.edu.cn')
+t=outlookbar.addtitle('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','ÏµÍ³ï¿½ï¿½ï¿½ï¿½',1)
+outlookbar.additem('ï¿½ï¿½Â¼ï¿½ï¿½Ñ§ï¿½ï¿½Ì³',t,'../vbb/forumdisplay.php?s=320e689ffabc5daa0be8b02c284d9968&forumid=39')
+outlookbar.additem('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½',t,'mailto:pobear@newmail.dlmu.edu.cn')
 
-t=outlookbar.addtitle('ĞÂÎÅÉèÖÃ','ÏµÍ³ÉèÖÃ',1)
-outlookbar.additem('ÉĞÎ´Í¨¹ıÎÄÕÂ',t,'un_pass.php')
-outlookbar.additem('ÒÑ¾­Í¨¹ıÎÄÕÂ',t,'al_pass.php')
-outlookbar.additem('ĞŞ¸ÄÏÖÓĞÎÄÕÂ',t,'modify.php')
-outlookbar.additem('×«Ğ´×îĞÂÎÄÕÂ',t,'sub_new.php')
-outlookbar.additem('Í¶¸å¸øÎÄÑ§±¨',t,'#')
+t=outlookbar.addtitle('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½','ÏµÍ³ï¿½ï¿½ï¿½ï¿½',1)
+outlookbar.additem('ï¿½ï¿½Î´Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',t,'un_pass.php')
+outlookbar.additem('ï¿½Ñ¾ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',t,'al_pass.php')
+outlookbar.additem('ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',t,'modify.php')
+outlookbar.additem('×«Ğ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',t,'sub_new.php')
+outlookbar.additem('Í¶ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½',t,'#')
 
-t=outlookbar.addtitle('ÍË³öÏµÍ³','¹ÜÀíÊ×Ò³',1)
-outlookbar.additem('µã»÷ÍË³öµÇÂ¼',t,'loginout.php')
+t=outlookbar.addtitle('ï¿½Ë³ï¿½ÏµÍ³','ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³',1)
+outlookbar.additem('ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Â¼',t,'loginout.php')

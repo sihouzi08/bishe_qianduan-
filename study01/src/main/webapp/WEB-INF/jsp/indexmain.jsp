@@ -14,7 +14,7 @@
 </head>
 <frameset rows="50,*" cols="*" frameborder="no" border="0" framespacing="0">
     <frame src="/topframe" name="topFrame" frameborder="no" scrolling="No" noresize="noresize" id="topFrame" title="topFrame" />
-    <frameset name="myFrame" cols="199,7,*" frameborder="no" border="0" framespacing="0">
+    <frameset name="myFrame"  id="myFrame" cols="199,7,*" frameborder="no" border="0" framespacing="0">
         <frame src="/leftframe" name="leftFrame" frameborder="no" scrolling="No" noresize="noresize" id="leftFrame" title="leftFrame" />
         <frame src="/switchframe" name="midFrame" frameborder="no" scrolling="No" noresize="noresize" id="midFrame" title="midFrame" />
         <frameset >

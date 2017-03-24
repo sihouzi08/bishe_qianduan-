@@ -20,22 +20,22 @@ public class jspController {
         return "dd1";
     }
 
-    @RequestMapping("/dd2")
-    public String dd2_jsp_test(){
-        logger.info("dd2_jsptest");
-        return "dd2";
+    @RequestMapping("/shopmain")
+    public String shopmain_jsp_test(){
+        logger.info("shopmain_jsptest");
+        return "shopmain";
     }
 
-    @RequestMapping("/dd3")
-    public String dd3_jsp_test(){
-        logger.info("dd3_jsptest");
-        return "dd3";
+    @RequestMapping("/usermain")
+    public String usermain_jsp_test(){
+        logger.info("usermain_jsptest");
+        return "usermain";
     }
 
-    @RequestMapping("/dd4")
-    public String dd4_jsp_test(){
-        logger.info("dd4_jsptest");
-        return "dd4";
+    @RequestMapping("/ordermain")
+    public String ordermain_jsp_test(){
+        logger.info("ordermain_jsptest");
+        return "ordermain";
     }
 
     @RequestMapping("/dd5")
@@ -44,10 +44,10 @@ public class jspController {
         return "dd5";
     }
 
-    @RequestMapping("/ddd")
-    public String ddd_jsp_test(){
-        logger.info("ddd_jsptest");
-        return "ddd";
+    @RequestMapping("/messagesmain")
+    public String messagesmain_jsp_test(){
+        logger.info("messagesmain_jsptest");
+        return "messagesmain";
     }
 
     @RequestMapping("/indexmain")
@@ -104,10 +104,10 @@ public class jspController {
         return "dingdancheck";
     }
 
-    @RequestMapping("/huiyuantest")
-    public String huiyuantest_jsp_test(){
-        logger.info("huiyuantest_jsp_test");
-        return "huiyuantest";
+    @RequestMapping("/thisuser")
+    public String thisuser_jsp_test(){
+        logger.info("thisuser_jsp_test");
+        return "thisuser";
     }
 
     @RequestMapping("/profile")
@@ -134,5 +134,56 @@ public class jspController {
         return "yudingdan";
     }
 
+    @RequestMapping("/testtubiao")
+    public String testtubiao_jsp_test(){
+        logger.info("testtubiao_jsp_test");
+        return "testtubiao";
+    }
+
+    @RequestMapping("/testdata")
+    public String testdata_jsp_test(){
+        logger.info("testdata_jsp_test");
+        return "testdata";
+    }
+
+    @RequestMapping("/testshop")
+    public String testshop_jsp_test(){
+        logger.info("testshop_jsp_test");
+        return "testshop";
+    }
+
+    @RequestMapping("/testuser")
+    public String testuser_jsp_test(){
+        logger.info("testuser_jsp_test");
+        return "testuser";
+    }
+    @RequestMapping("/testorder")
+    public String testorder_jsp_test(){
+        logger.info("testorder_jsp_test");
+        return "testorder";
+    }
+    @RequestMapping("/testmessages")
+    public String testmessages_jsp_test(){
+        logger.info("testmessages_jsp_test");
+        return "testmessages";
+    }
+
+    @RequestMapping("/index")
+    public String index_jsp_test(){
+        logger.info("index_jsp_test");
+        return "index";
+    }
+
+    @RequestMapping("/help")
+    public String help_jsp_test(){
+        logger.info("help_jsp_test");
+        return "help";
+    }
+
+    @RequestMapping("/time")
+    public String time_jsp_test(){
+        logger.info("time_jsp_test");
+        return "time";
+    }
 
 }

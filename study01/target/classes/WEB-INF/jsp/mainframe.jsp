@@ -79,12 +79,12 @@
 
 <body style="height: 100%">
 <div id="nav">
-    <ul><li id="man_nav_1" onclick="list_sub_nav(id,'管理首页','/manframe')"  class="bg_image_onclick">管理首页</li><li id="man_nav_2" onclick="list_sub_nav(id,'商品查看','/dd2')"  class="bg_image">商品查看</li><li id="man_nav_3" onclick="list_sub_nav(id,'账户管理','/dd3')"  class="bg_image">账户管理</li><li id="man_nav_4"  onclick="list_sub_nav(id,'订单管理','/dd4')"  class="bg_image">订单管理</li><li id="man_nav_5"  onclick="list_sub_nav(id,'评论管理','/ddd')"  class="bg_image">评论管理</li></ul>
+    <ul><li id="man_nav_1" onclick="list_sub_nav(id,'管理首页','/dd1')"  class="bg_image_onclick">管理首页</li><li id="man_nav_2" onclick="list_sub_nav(id,'商品查看','/shopmain')"  class="bg_image">商品查看</li><li id="man_nav_3" onclick="list_sub_nav(id,'账户管理','/usermain')"  class="bg_image">账户管理</li><li id="man_nav_4"  onclick="list_sub_nav(id,'订单管理','/ordermain')"  class="bg_image">订单管理</li><li id="man_nav_5"  onclick="list_sub_nav(id,'评论管理','/messagesmain')"  class="bg_image">评论管理</li></ul>
 
 
 </div>
 <div id="sub_info">&nbsp;&nbsp;<img src="images/hi.gif" />&nbsp;<span id="show_text">欢迎使用“广商淘”后台管理系统!</span></div>
-<iframe  src="/dd5"name="manFrame" class="bg_image" frameborder="no" id="manFrame" title="manFrame"  style="width: 100%;height: 80%" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" />
+<iframe  src="/dd5" name="manFrame" class="bg_image" frameborder="no" id="manFrame" title="manFrame"  style="width: 100%;height: 80%" onload="this.height=this.contentWindow.document.documentElement.scrollHeight" />
 
 
 </body>

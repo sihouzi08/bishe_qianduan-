@@ -28,19 +28,20 @@
                 animated: 'bounceslide'
             });
         });
-        function initinav(sortname)
-        {
-            outlookbar.getdefaultnav(sortname);
-            outlookbar.getbytitle(sortname);
-//window.top.frames['manFrame'].location = "manFrame.html"
-        }
+//        function initinav(sortname)
+//        {
+//            outlookbar.getdefaultnav(sortname);
+//            outlookbar.getbytitle(sortname);
+////            window.top.frames['manFrame'].location = "manFrame.html"
+//        }
     </script>
     <style type="text/css">
-        <!--
+
         body {
             margin:0px;
             padding:0px;
             font-size: 12px;
+
         }
         #navigation {
             margin:0px;
@@ -62,9 +63,11 @@
             margin:0px;
             padding:0px;
             text-indent:0px;
+            height:23px;
         }
         #navigation li {
             list-style:none; display:inline;
+
         }
         #navigation li li a {
             display:block;
@@ -77,59 +80,61 @@
 
             border:solid 1px #adb9c2;
         }
-        -->
+
     </style>
 
 </head>
-<body onload="initinav('管理首页')">
+<body>
 <div id="left_content">
     <div id="user_info">欢迎您，<shiro:principal/><br />[<a href="#">系统管理员</a>，<a href="${pageContext.request.contextPath }/logout">退出</a>]</div>
     <div id="main_nav">
 
     </div>
 </div>
-<div  style="height:80%;">
+<div  >
     <ul id="navigation">
-        <li> <a class="head">用户管理</a>
+        <li> <a class="head"  >用户管理</a>
             <ul>
-                <li><a href="/huiyuantest" target="rightFrame">会员</a></li>
+                <li><a href="/testuser" target="rightFrame">查看并操作</a></li>
                 <li><a href="/putongyonghutest" target="rightFrame">普通用户</a></li>
             </ul>
         </li>
         <li> <a class="head">订单管理</a>
             <ul>
-                <li><a href="/dingdancheck" target="rightFrame">成功订单查询</a></li>
+                <li><a href="/testorder" target="rightFrame">查看并操作</a></li>
                 <li><a href="/yudingdan" target="rightFrame">待处理订单</a></li>
-            </ul>
-        </li>
-        <li> <a class="head">分类管理</a>
-            <ul>
-                <li><a href="/ddd" target="rightFrame">添加分类</a></li>
-                <li><a href="/ddd" target="rightFrame">查看/删除分类</a></li>
             </ul>
         </li>
         <li> <a class="head">商品管理</a>
             <ul>
-                <li><a href="/ddd" target="rightFrame">添加分类</a></li>
+                <li><a href="/testshop" target="rightFrame">查看并操作</a></li>
                 <li><a href="/ddd" target="rightFrame">查看/删除分类</a></li>
             </ul>
         </li>
         <li> <a class="head">留言评论管理</a>
             <ul>
-                <li><a href="/checkliuyan" target="rightFrame">查看/删除留言</a></li>
+                <li><a href="/testmessages" target="rightFrame">查看并操作</a></li>
                 <li><a href="/lookliuyan" target="rightFrame">查看/删除评论</a></li>
             </ul>
         </li>
+
+        <li> <a class="head">test0</a>
+            <ul>
+                <li><a href="/ddd" target="rightFrame">test1</a></li>
+                <li><a href="/ddd" target="rightFrame">test2</a></li>
+            </ul>
+        </li>
+
         <li> <a class="head">大数据test</a>
             <ul>
-                <li><a href="/lookliuyan" target="rightFrame">各种数据统计</a></li>
+                <li><a href="/testdata" target="rightFrame">各种数据统计</a></li>
                 <li><a href="/testtubiao" target="rightFrame">动态表单test</a></li>
             </ul>
         </li>
-        <li> <a class="head">友情链接管理</a>
+        <li> <a class="head">友情链接</a>
             <ul>
-                <li><a href="/ddd" target="rightFrame">添加友情链接</a></li>
-                <li><a href="/ddd" target="rightFrame">查看/修改友情链接</a></li>
+                <li><a href="http://101.200.56.75/" target="rightFrame">Kong API Gateway</a></li>
+                <li><a href="http://www.gzcc.cn/" target="rightFrame">广州商学院</a></li>
             </ul>
         </li>
         <li> <a class="head">版本信息</a>

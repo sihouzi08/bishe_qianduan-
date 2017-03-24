@@ -14,12 +14,12 @@
 </head>
 <script language="JavaScript">
     function Submit_onclick(){
-        if(parent.myFrame.cols == "199,7,*") {
-            parent.myFrame.cols="0,7,*";
+        if(window.parent.myFrame.cols == "199,7,*") {
+            top.myFrame.cols="0,7,*";
             document.getElementById("ImgArrow").src="images/switch_right.gif";
             document.getElementById("ImgArrow").alt="打开左侧导航栏";
         } else {
-            parent.myFrame.cols="199,7,*";
+            top.myFrame.cols="199,7,*";
             document.getElementById("ImgArrow").src="images/switch_left.gif";
             document.getElementById("ImgArrow").alt="隐藏左侧导航栏";
         }
