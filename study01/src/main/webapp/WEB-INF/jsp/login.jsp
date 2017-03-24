@@ -14,35 +14,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
     <title>广商淘系统登录页面</title>
 
-    <script src="JS/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 
-        $(document).ready(function(){
-            $.ajax({
-
-                url: "/hehe/login",
-                success: function (res) {
-
-                    alert(res)
-                }
-
-            });
-        //    alert("shiro_test()")
-        })
-
-        $(document).ready(function(){
-            $.ajax({
-
-                url: "http://101.200.56.75/index",
-                success: function (res) {
-                    var c = res;
-//                    p=res;
-                    alert(c)
-                }
-
-            });
-           // alert("kuayu()")
-        })
 
 
     </script>

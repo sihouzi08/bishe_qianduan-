@@ -88,9 +88,9 @@
             obj.parentNode.parentNode.parentNode.removeChild(obj.parentNode.parentNode);
         }
 
-        function getDishesList(page){
-            xmlAjaxRequest("/getDishesList?page="+page, "post", true, null, showDishesList, null, null);
-        }
+//        function getDishesList(page){
+//            xmlAjaxRequest("/getDishesList?page="+page, "post", true, null, showDishesList, null, null);
+//        }
 
 
         //显示菜品详情调用模态框
@@ -112,7 +112,7 @@
     </script>
 
 </head>
-<body class="bjys"style="height:90%;"onload="getDishesList(1)">
+<body class="bjys"style="height:90%">
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -208,11 +208,7 @@
                     </div>
                     <div class="panel-body">
 
-                        <div style="text-align: center;">
-                            <img src="img/userIcon.jpg" id="dishesImg" width="200px"
-                                 height="200px" class="img-circle"
-                                 style="border:1px solid #CCC;box-shadow:0 0 10px rgba(100, 100, 100, 1);"/>
-                        </div>
+
                         <p>
                         <h2 style="text-align: center;">
                             菜品名称： <span id="dishesName"></span>

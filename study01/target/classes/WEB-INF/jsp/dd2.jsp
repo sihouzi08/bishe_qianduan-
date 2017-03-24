@@ -1,31 +1,32 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html >
+<html>
 <head>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/common.css" type="text/css" />
+    <link rel="stylesheet" href="css/common.css" type="text/css"/>
     <title>"广商淘"系统</title>
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script src="js/ajax.js"></script>
     <script type="text/javascript">
-        var p;
-        window.onload =function() {
+        var p,maxpage;
+        var h;
+
+        window.onload = function () {
             $.ajax({
-                url: "http://101.200.56.75/shop/",
+                url: "http://101.200.56.75/shop/newpage?page=0&size=5&sort=shopid,asc",
                 type: "GET",
                 dataType: "json",
                 success: function (res) {
-                    p = res.payload;
-
-
+                    p = res.payload.content;
+                    maxpage=res.payload.totalPages;
 
                     var ShopTable = document.getElementById("ShopTable");
                     for (var i = 0; i < p.length; i++) {
                         var row = ShopTable.insertRow(ShopTable.rows.length);
                         var c1 = row.insertCell(0);
-                        c1.innerHTML = i;
+                        c1.innerHTML = i + 1;
                         var c2 = row.insertCell(1);
                         c2.innerHTML = p[i].shopname;
                         var c3 = row.insertCell(2);
@@ -37,37 +38,26 @@
                         var c6 = row.insertCell(5);
                         c6.innerHTML = p[i].picture;
                         var c7 = row.insertCell(6);
-                        c7.innerHTML = "<a href='adminAmendDishes.jsp?id="+p[i].shopid+"'title='编辑商品'>"
-                                +          "<span class='glyphicon glyphicon-cog'></span>"
-                                +      "</a>"
-                                +      "<a href='#' title='查看商品'"
-                                +         "onclick=\"detail('" + p[i].shopname  +"','" + p[i].shopid+"','" + p[i].shop_status+ "','" + p[i].des + "','"  + p[i].price  +"')\">"
-                                +          "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
-                                +      "</a>"
-                                +      "<a href='#' title='已售商品'"
-                                +          "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                                +      "</a>";
-//                        var c8 = row.insertCell(7);
-//                        c8.innerHTML = p[i].phone;
-//                        var c9 = row.insertCell(8);
-//                        c9.innerHTML = p[i].rental;
-//                        var c10 = row.insertCell(9);
-//                        c10.innerHTML = p[i].tenancy;
+                        c7.innerHTML = "<a href='adminAmendDishes.jsp?id=" + p[i].shopid + "'title='编辑商品'>"
+                                + "<span class='glyphicon glyphicon-cog'></span>"
+                                + "</a>"
+                                + "<a href='#' title='查看商品'"
+                                + "onclick=\"detail('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].des + "','" + p[i].price + "')\">"
+                                + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
+                                + "</a>"
+                                + "<a href='#' title='已售商品'"
+                                + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
+                                + "</a>";
+
                     }
 
 
+                    for (var i = 1; i < maxpage + 1; i++) {
+                        addElementLi("pager", i);
+                    }
 
 
-
-
-//                                      for(var i=0,l=p.length;i<l;i++){
-//                        for (var key in p[i]) {
-//                            alert(key + ':' + p[i][key]);
-//                        }
-//                    }
-
-
-
+                    addElementLiEnd("pager");
 
 
                     alert("kkkk()")
@@ -78,27 +68,108 @@
         }
 
 
-        function checkDelete(id, name, obj) {
-            msg = '是否将' + name + '下架？';
-            if (confirm(msg)) {
-                xmlAjaxRequest("/dishesStatus?id=" + id + "&shelvesed=" + 0, "post", true, null, deleteCallback, obj, null)
+        function addElementLiEnd(obj) {
+            var ul = document.getElementById(obj);
+
+
+            //添加 li
+            var li = document.createElement("li");
+
+            li.innerHTML = "<a href='#'"
+                    + "onclick=\"nexttest()\""
+                    + " aria-label='Next'>"
+                    + "<span aria-hidden='true'>&raquo;</span></a>";
+            ul.appendChild(li);
+        }
+
+
+        function nexttest() {
+            h = document.getElementById("ShopTable").rows[5].cells[0].innerHTML;
+            h = h/5  ;
+
+            if(h >= maxpage){
+                alert("当前第" + h + "页的显示"+"  shi最大页数：" + maxpage)
+                return false;
             }
+            sometest(h+1);
+            alert("当前第" + h + "页的显示"+"     最大页数：" + maxpage)
         }
 
 
 
 
 
+        function sometest(page) {
+            $.ajax({
+                url: "http://101.200.56.75/shop/newpage?page=" + (page-1) + "&size=5&sort=shopid,asc",
+                type: "GET",
+                dataType: "json",
+                success: function (res) {
+                    p = res.payload.content;
+                    var ShopTable = document.getElementById("ShopTable");
+
+                    for (var i = 0; i < p.length; i++) {
+                        ShopTable.rows[i + 1].cells[0].innerHTML = (page - 1) * 5 + i + 1;
+//
+                        ShopTable.rows[i + 1].cells[1].innerHTML = p[i].shopname;
+
+                        ShopTable.rows[i + 1].cells[2].innerHTML = p[i].des;
+
+                        ShopTable.rows[i + 1].cells[3].innerHTML = p[i].price;
+
+                        ShopTable.rows[i + 1].cells[4].innerHTML = p[i].shop_status;
+
+                        ShopTable.rows[i + 1].cells[5].innerHTML = p[i].picture;
+
+                        ShopTable.rows[i + 1].cells[6].innerHTML = "<a href='adminAmendDishes.jsp?id=" + p[i].shopid + "'title='编辑商品'>"
+                                + "<span class='glyphicon glyphicon-cog'></span>"
+                                + "</a>"
+                                + "<a href='#' title='查看商品'"
+                                + "onclick=\"detail('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].des + "','" + p[i].price + "')\">"
+                                + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
+                                + "</a>"
+                                + "<a href='#' title='已售商品'"
+                                + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
+                                + "</a>";
+
+
+                    }
+
+
+                    alert("第" + page + "页的显示")
+                }
+
+            });
+            alert(page);
+        }
+
+
+        function addElementLi(obj, page) {
+            var ul = document.getElementById(obj);
+
+            //添加 li
+            var li = document.createElement("li");
+
+            //设置 li 属性，如 id
+            li.setAttribute("id", page);
+
+            li.innerHTML = "<a href='#'"
+                    + "onclick=\"sometest('" + page + "')\">"
+                    + page + "</a>";
+            ul.appendChild(li);
+        }
+
+
 
         //显示菜品详情调用模态框
-        function detail(name,shopid,shop_status,des,price) {
-            var shop_status = shop_status=="0"?"下架":"上架";
-             document.getElementById("ShopName").innerHTML=name;
-            document.getElementById("Des").innerHTML=des;
-            document.getElementById("price").innerHTML=price;
-            document.getElementById("shopid").innerHTML=shopid;
+        function detail(name, shopid, shop_status, des, price) {
+            var shop_status = shop_status == "0" ? "下架" : "上架";
+            document.getElementById("ShopName").innerHTML = name;
+            document.getElementById("Des").innerHTML = des;
+            document.getElementById("price").innerHTML = price;
+            document.getElementById("shopid").innerHTML = shopid;
 
-            document.getElementById("shop_status").innerHTML=shop_status;
+            document.getElementById("shop_status").innerHTML = shop_status;
 
 
             $('#myModal').modal('show');
@@ -120,9 +191,9 @@
             <span class="glyphicon glyphicon-home navFont"><strong class=“systemTitle”> 广商淘-商品查看模块</strong></span>
         </a>
     </div>
-    </nav>
+</nav>
 <!-- 右边详细内容 -->
-<div >
+<div>
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">商品列表</h3>
@@ -137,7 +208,7 @@
         </div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered"  id="ShopTable">
+                <table class="table table-striped table-hover table-bordered" id="ShopTable">
 
                     <tr>
                         <th class="tableCenter">商品编号</th>
@@ -152,6 +223,16 @@
                 </table>
                 <nav style="text-align: center">
                     <ul id="pager" class="pagination pagination-lg pager">
+                        <li class="disabled">
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <%--<li><a href="#">1</a></li>--%>
+                        <%--<li><a href="#">2</a></li>--%>
+                        <%--<li><a href="#">3</a></li>--%>
+                        <%--<li><a href="#">4</a></li>--%>
+                        <%--<li><a href="#">5</a></li>--%>
 
                     </ul>
                 </nav>
@@ -173,10 +254,6 @@
 <!-- 将外部文件引入放在最后面这里更多为了提高用户体验，不必像传统的放前面后必须加载完后页面才显示内容，延缓了页面响应 -->
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
-
-
-
 
 
 <%--查看菜品详情的模态框--%>

@@ -11,23 +11,36 @@
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
     <link rel="stylesheet" href="css/common.css" type="text/css" />
     <title>管理区域</title>
-    <script src="JS/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 
 
-        $(document).ready(function(){
+        window.onload =function() {
             $.ajax({
-
-                url: "/hehe",
+                url: "http://101.200.56.75/shop/newpage?page=2&size=5&sort=shopid,asc",
                 type: "GET",
+                dataType: "json",
                 success: function (res) {
-                    var p = res;
-                    alert(p)
+                    p = res.payload.content;
+
+
+
+//                                      for(var i=0,l=p.length;i<l;i++){
+//                        for (var key in p[i]) {
+//                            alert(key + ':' + p[i][key]);
+//                        }
+//                    }
+
+
+
+
+
+                    alert("分页test()"+p[1].picture)
                 }
 
             });
-            alert("shiro_test()")
-        })
+            alert("(跨域分页)")
+        }
 
 
     </script>
