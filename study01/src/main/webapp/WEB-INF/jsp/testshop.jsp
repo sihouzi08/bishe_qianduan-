@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -224,18 +226,18 @@
                         var c6 = row.insertCell(5);
                         c6.innerHTML = p[i]._category.category
                         var c7 = row.insertCell(6);
-                        c7.innerHTML = "<a href='#' title='修改商品'"
+                        c7.innerHTML = "<shiro:hasPermission name="add">"+"<a href='#' title='修改商品'"
                             + "onclick=\"change('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].price + "','" + p[i].des + "','" + p[i].userName + "','" + p[i].userphne + "','" + p[i].category_id + "','" + p[i].picture + "')\">"
                             + "<span class='glyphicon glyphicon-cog'></span>"
-                            + "</a>"
+                            + "</a>"+"</shiro:hasPermission>"
                             + "<a href='#' title='商品详情'"
                             + "onclick=\"detail('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].des + "','" + p[i].price + "')\">"
                             + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
                             + "</a>"
-                            + "<a href='#' title='商品删除'"
+                            + "<shiro:hasPermission name="del">"+"<a href='#' title='商品删除'"
                             + "onclick=\"dodelete('" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].shopname + "')\">"
                             + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                            + "</a>";
+                            + "</a>"+"</shiro:hasPermission>";
 
                     }
 
@@ -419,7 +421,9 @@
     </div>
     <div class="operate">
         <div class="pull-left">
-            <input type="button" onclick="download()" name="" value="导出EEXCEL" class="btn  btn-success">
+            <shiro:hasRole name="admin">
+                <input type="button" onclick="download()" name="" value="导出EEXCEL" class="btn  btn-success">
+            </shiro:hasRole>
             <select name="s1" onchange="ch3()">
                 <option value="0" selected="selected">请选择每页记录数</option>
                 <option value=5>5</option>

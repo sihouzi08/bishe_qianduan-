@@ -1,3 +1,4 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -173,18 +174,18 @@
                         var c6 = row.insertCell(5);
                         c6.innerHTML = p[i]._shop.shopname;
                         var c7 = row.insertCell(6);
-                        c7.innerHTML = "<a href='#' title='修改评论'"
+                        c7.innerHTML = "<shiro:hasPermission name="add">"+"<a href='#' title='修改评论'"
                             + "onclick=\"change('" + p[i].messageid + "','" + p[i].leave_time + "','" + p[i].content + "','" + p[i]._user.userName + "','" + p[i]._shop.shopname + "','" + p[i].leave_status + "')\">"
                             + "<span class='glyphicon glyphicon-cog'></span>"
-                            + "</a>"
+                            + "</a>"+"</shiro:hasPermission>"
                             + "<a href='#' title='查看评论'"
                             + "onclick=\"detail('" + p[i].content + "','" + p[i].messageid + "','" + p[i].leave_time + "','" + p[i].leave_status + "','" + p[i].userName + "','" + p[i]._shop.shopname + "')\">"
                             + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
                             + "</a>"
-                            + "<a href='#' title='评论状态'"
+                            + "<shiro:hasPermission name="del">"+"<a href='#' title='评论状态'"
                             + "onclick=\"status('" + p[i].messageid + "','" + p[i].leave_status + "','" + ((page - 1) * default_size + i + 1) + "')\">"
                             + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                            + "</a>";
+                            + "</a>"+"</shiro:hasPermission>";
 
                     }
 
@@ -454,11 +455,11 @@
 
             </div>
         </div>
-        <hr>
+        <hr><shiro:hasRole name="admin">
         <div style="text-align: center">
             如果您需要打印messages表单，请点击右边的按钮：
             <input type="button" class="btn btn-primary addUserAndDishes" value="导出excel" onclick="download()"/>
-        </div>
+        </div></shiro:hasRole>
     </div>
     <div style="height:1px;width: 100%;background: #CCC;margin-bottom: 10px"></div>
     <footer>

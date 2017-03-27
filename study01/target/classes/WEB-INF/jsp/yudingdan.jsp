@@ -23,7 +23,7 @@
 
 </head>
 
-<body onload="getOrderList()">
+<body>
 <!-- 顶部导航 -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="navbar-header">
@@ -163,63 +163,6 @@
 <script type="text/javascript" src="js/bootstrap-datepicker.zh-CN.min.js"></script>
 <script>
 
-    function getOrderList(){
-        xmlAjaxRequest("/getOrder?sql="+"SELECT orderinfo.*,userinfo.userAccount FROM orderinfo,userinfo WHERE waiterId=userId AND orderState BETWEEN 2 AND 3 ORDER BY orderEndDate DESC", "post", true, null, showOrderList, null, null);
-    }
-
-    function orderSearch(){
-        orderEndDateMin = document.getElementById("orderEndDateMin").value;
-        orderEndDateMax = document.getElementById("orderEndDateMax").value;
-        xmlAjaxRequest("/getOrder?sql="+"SELECT orderinfo.*,userinfo.userAccount FROM orderinfo,userinfo WHERE waiterId=userId AND orderState BETWEEN 2 AND 3 AND orderEndDate BETWEEN '" + orderEndDateMin + "' AND '" + orderEndDateMax +"' ORDER BY orderEndDate DESC", "post", true, null, showOrderList, null, null);
-    }
-
-    function showOrderList(responseXml, obj) {
-        var table = document.getElementById("orderTable");
-        table.innerHTML = "";
-        var orders = responseXml.getElementsByTagName("order");
-        for ( var i = 0; i < orders.length; i++) {
-            var order = orders[i];
-            var attrs = order.childNodes;
-            var orderId;
-            var tableId;
-            var orderBeginDate;
-            var orderEndDate;
-            var sum;
-            var userAccount;
-            for ( var j = 0; j < attrs.length; j++) {
-                var attr = attrs[j];
-                if (attr.nodeName == "orderId") {
-                    orderId = attr.childNodes[0].nodeValue;
-                }
-                if (attr.nodeName == "tableId") {
-                    tableId = attr.childNodes[0].nodeValue;
-                }
-                if (attr.nodeName == "orderBeginDate") {
-                    orderBeginDate = attr.childNodes[0].nodeValue;
-                }
-                if (attr.nodeName == "orderEndDate") {
-                    orderEndDate = attr.childNodes[0].nodeValue;
-                }
-                if (attr.nodeName == "sum") {
-                    sum = attr.childNodes[0].nodeValue;
-                }
-                if (attr.nodeName == "userAccount") {
-                    userAccount = attr.childNodes[0].nodeValue;
-                }
-            }
-
-            var newLine ="<td class='tableCenter'>" + tableId + "</td>"
-                    +  "<td class='tableCenter'>" + orderEndDate + "</td>"
-                    +  "<td class='tableCenter'>" + userAccount + "</td>"
-                    +  "<td class='tableCenter'>" + sum + "</td>"
-                    +  "<td class='tableCenter'>"
-                    +  "    <a href='#' title='订单详情'>"
-                    +  "        <span class='glyphicon glyphicon-list-alt'></span>"
-                    +  "    </a>"
-                    +  "</td>";
-            table.innerHTML += newLine;
-        }
-    }
     $(".form_datetime").datepicker({
         language: 'zh-CN',
         todayHighlight: 1,
