@@ -26,9 +26,9 @@ public class Role {
     private String rolename;
     @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private List<Permission> permissionList;// 一个角色对应多个权限
-    @ManyToMany
-    @JoinTable(name = "t_user_role", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {
-            @JoinColumn(name = "user_id")})
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    @JoinTable(name = "t_user_role", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id",referencedColumnName = "id") })
     private List<User> userList;// 一个角色对应多个用户
 
     public Integer getId() {

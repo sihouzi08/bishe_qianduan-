@@ -1,4 +1,6 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -177,18 +179,18 @@
                         var c6 = row.insertCell(5);
                         c6.innerHTML = p[i]._shop._category.category;
                         var c7 = row.insertCell(6);
-                        c7.innerHTML = "<a href='#' title='修改订单'"
+                        c7.innerHTML = "<shiro:hasPermission name="add">"+"<a href='#' title='修改订单'"
                             + "onclick=\"change('" + p[i].ordertime + "','" + p[i].orderid + "','" +  p[i].paystate + "','" + p[i].moneySum + "','" + p[i].amount + "','" + p[i].userid + "','" + p[i].shopid + "','" + p[i]._shop.shopname + "','" + p[i]._user.userName + "')\">"
                             + "<span class='glyphicon glyphicon-cog'></span>"
-                            + "</a>"
+                            + "</a>"+"</shiro:hasPermission>"
                             + "<a href='#' title='查看订单'"
                             + "onclick=\"detail('" + p[i].moneySum + "','" + p[i].orderid + "','" + p[i]._shop.shopname + "','" + p[i]._shop.des + "','" + p[i]._user.userName + "','" + p[i].ordertime+ "')\">"
                             + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
                             + "</a>"
-                            + "<a href='#' title='订单状态'"
+                            + "<shiro:hasPermission name="del">"+"<a href='#' title='订单状态'"
                             + "onclick=\"status('"  + p[i].orderid + "','" + p[i].paystate  + "','" + p[i].shopname  + "')\">"
                             + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                            + "</a>";
+                            + "</a>"+"</shiro:hasPermission>";
 
                     }
 
@@ -475,11 +477,11 @@
 
             </div>
         </div>
-        <hr>
+        <hr><shiro:hasRole name="admin">
         <div style="text-align: center">
             如果您需要打印order表单，请点击右边的按钮：
             <input type="button" class="btn btn-primary addUserAndDishes" value="导出excel" onclick="download()" />
-        </div>
+        </div></shiro:hasRole>
     </div>
     <div style="height:1px;width: 100%;background: #CCC;margin-bottom: 10px"></div>
     <footer>

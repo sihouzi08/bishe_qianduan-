@@ -86,7 +86,7 @@
 </head>
 <body>
 <div id="left_content">
-    <div id="user_info">欢迎您，<shiro:principal/><br />[<a href="#">系统管理员</a>，<a href="${pageContext.request.contextPath }/logout">退出</a>]</div>
+    <div id="user_info"><shiro:principal/><br />[<a href="${pageContext.request.contextPath }/logout">退出</a>]</div>
     <div id="main_nav">
 
     </div>

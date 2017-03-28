@@ -15,4 +15,6 @@ public interface IUserDao extends CrudRepository<User, Integer> {
 
 	@Query("select t from User t ")
 	List<User> getList();
+
+
 }

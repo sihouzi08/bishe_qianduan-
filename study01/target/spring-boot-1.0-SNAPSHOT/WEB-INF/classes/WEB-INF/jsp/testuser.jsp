@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -24,7 +26,7 @@
         var p;
         var default_size=5;
         var default_sort="userid,asc";
-
+        var controller=0;
         function ch3(){
             var s1 = document.getElementsByName("s1")[0];
             if (s1.value == "0") {
@@ -35,20 +37,28 @@
 
             default_size=s1.value;
 
-            remond('0',default_size,default_sort);
+            if (controller == 0) {
+                remond('0', default_size, default_sort);
+            } else {
+                remond('0', default_size, default_sort, 'like', 'shopname', value);
+            }
         }
 
-        function ch2(){
-            var s2 = document.getElementsByName("s2")[0];
-            if (s2.value == "0") {
+        function ch0(){
+            var s0 = document.getElementsByName("s0")[0];
+            if (s0.value == "0") {
                 alert("请重新选择排序方式！");
                 return false;
             }
-            alert('you choice: 排序方式为-->' + s2.value);
+            alert('you choice: 排序方式为-->' + s0.value);
 
-            default_sort=s2.value+",asc";
+            default_sort=s0.value+",asc";
 
-            remond('0',default_size,default_sort);
+            if (controller == 0) {
+                remond('0', default_size, default_sort);
+            } else {
+                remond('0', default_size, default_sort, 'like', 'shopname', value);
+            }
         }
 
         window.onload =function() {
@@ -327,18 +337,18 @@
                         c9.innerHTML = userstatus;
 
                         var c10 = row.insertCell(10);
-                        c10.innerHTML = "<a href='#' title='用户修改'"
+                        c10.innerHTML = "<shiro:hasPermission name="add">"+"<a href='#' title='用户修改'"
                             + "onclick=\"change('" + p[i].userName + "','" + p[i].userid + "','" + p[i].password + "','" + p[i].email + "','" + p[i].school + "','" + p[i].userstatus + "','" + p[i].court + "','" + p[i].professional + "','" + p[i].phone + "')\">"
                             + "<span class='glyphicon glyphicon-cog'></span>"
-                            + "</a>"
+                            + "</a>"+"</shiro:hasPermission>"
                             + "<a href='#' title='用户详情'"
                             + "onclick=\"detail('" + p[i].userName + "','" + p[i].userid + "','" + p[i].password + "','" + p[i].email + "','" + p[i].school + "')\">"
                             + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
                             + "</a>"
-                            + "<a href='#' title='用户拉黑'"
+                            + "<shiro:hasPermission name="del">"+"<a href='#' title='用户拉黑'"
                             + "onclick=\"dodelete('"  + p[i].userid + "','" + p[i].userName  + "','" + p[i].userstatus  + "')\">"
                             + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                            + "</a>";
+                            + "</a>"+"</shiro:hasPermission>";
 
                     }
 
@@ -386,6 +396,28 @@
                 window.open(url);
             }
         }
+
+
+        function OnInput (event) {
+//            alert ("The new content: " + event.target.value);
+            controller=1;
+            value=event.target.value;
+            remond('0',default_size,default_sort,'like','userName',value);
+        }
+        // Internet Explorer
+        function OnPropChanged (event) {
+            if (event.propertyName.toLowerCase () == "value") {
+                alert ("The new content: " + event.srcElement.value);
+                controller=1;
+                value=event.target.value;
+                remond('0',default_size,default_sort,'like','userName',value);
+            }
+        }
+
+
+
+
+
     </script>
 
 </head>
@@ -407,7 +439,9 @@
     </div>
     <div class="operate">
         <div class="pull-left">
-            <input type="button" onclick="download()" name="" value="导出EEXCEL" class="btn  btn-success">
+            <shiro:hasRole name="admin">
+                <input type="button" onclick="download()" name="" value="导出EEXCEL" class="btn  btn-success">
+            </shiro:hasRole>
             <select name="s1" onchange="ch3()">
                 <option value="0" selected="selected">请选择每页记录数</option>
                 <option value=5>5</option>
@@ -415,12 +449,16 @@
                 <option value=10>10</option>
             </select>
 
-            <select name="s2" onchange="ch2()">
+            <select name="s0" onchange="ch0()">
                 <option value="0" selected="selected">请选择排序</option>
                 <option value="userid">id</option>
                 <option value="userName">userName</option>
                 <%--<option value="">10</option>--%>
             </select>
+
+
+            <input size="12" id="ShopBySearch" type="text" value="" placeholder="请输入查找"  oninput="OnInput (event)" onpropertychange="OnPropChanged (event)">
+
 
 
         </div>

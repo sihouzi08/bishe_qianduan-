@@ -29,9 +29,9 @@ public class User {
     private String username;
     @NotEmpty(message = "密码不能为空")
     private String password;
-    @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(name = "t_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "role_id") })
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
+    @JoinTable(name = "t_user_role", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id",referencedColumnName = "id") })
     private List<Role> roleList;// 一个用户具有多个角色
 
     public User() {

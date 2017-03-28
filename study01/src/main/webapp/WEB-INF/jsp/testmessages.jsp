@@ -27,7 +27,10 @@
         var h;
         var default_size=5;
         var default_sort="messageid,asc";
-
+        var _key=0;
+        var orderEndDateMin,orderEndDateMax;
+        var MessagesByUsername,MessagesByShop,MessagesByContent;
+        var _operation;
         function ch3(){
             var s1 = document.getElementsByName("s1")[0];
             if (s1.value == "0") {
@@ -37,21 +40,51 @@
             alert('you choice: 每页' + s1.value +"条记录");
 
             default_size=s1.value;
+            if (_key==2) {
+                if(_operation=="username"){
+                    remond('0',default_size,default_sort,_operation,_key,MessagesByUsername);
+                }else if( _operation=="shopname"){
+                    remond('0',default_size,default_sort,_operation,_key,MessagesByShop);
+                }else if( _operation=="category"){
+                    remond('0',default_size,default_sort,_operation,_key,MessagesByContent);
+                }else{
+                    alert("出错");
+                }
 
-            remond('0',default_size,default_sort);
+            }else if (_key==3) {
+                remond('0',default_size,default_sort,orderEndDateMin,_key,orderEndDateMax);
+            }else{
+                remond('0',default_size,default_sort);
+            }
+//            remond('0',default_size,default_sort);
         }
 
-        function ch2(){
-            var s2 = document.getElementsByName("s2")[0];
-            if (s2.value == "0") {
+        function ch0(){
+            var s0 = document.getElementsByName("s0")[0];
+            if (s0.value == "0") {
                 alert("请重新选择排序方式！");
                 return false;
             }
-            alert('you choice: 排序方式为-->' + s2.value);
+            alert('you choice: 排序方式为-->' + s0.value);
 
-            default_sort=s2.value+",asc";
+            default_sort=s0.value+",asc";
+            if (_key==2) {
+                if(_operation=="username"){
+                    remond('0',default_size,default_sort,_operation,_key,MessagesByUsername);
+                }else if( _operation=="shopname"){
+                    remond('0',default_size,default_sort,_operation,_key,MessagesByShop);
+                }else if( _operation=="category"){
+                    remond('0',default_size,default_sort,_operation,_key,MessagesByContent);
+                }else{
+                    alert("出错");
+                }
 
-            remond('0',default_size,default_sort);
+            }else if (_key==3) {
+                remond('0',default_size,default_sort,orderEndDateMin,_key,orderEndDateMax);
+            } else{
+                remond('0',default_size,default_sort);
+            }
+//            remond('0',default_size,default_sort);
         }
 
         window.onload = function () {
@@ -231,8 +264,19 @@
         }
 
         function remond(page,size,sort,operation,key,value) {
+            var url="http://101.200.56.75/messages/messagespage?page="+page+"&size="+size+"&sort="+sort+"&operation="+operation+"&key="+key+"&value="+value;
+            if(key==2){
+                url="http://101.200.56.75/datastatistics/messagesusername?&page="+page+"&size="+size+"&sort="+default_sort+"&"+operation+"="+value;
+                _key=2;
+                alert(url)
+            }
+            if(key==3){
+                url="http://101.200.56.75/datastatistics/date?&page="+page+"&size="+size+"&sort="+sort+"&field=Leave_time"+"&orderEndDateMin="+operation+"&orderEndDateMax="+value;
+                _key=3;
+                alert(url+"    key="+key)
+            }
             $.ajax({
-                url: "http://101.200.56.75/messages/messagespage?page="+page+"&size="+size+"&sort="+sort+"&operation="+operation+"&key="+key+"&value="+value,
+                url: url,
                 type: "GET",
                 dataType: "json",
                 success: function (res) {
@@ -254,7 +298,7 @@
                         var c3 = row.insertCell(3);
                         c3.innerHTML = p[i].leave_time;
                         var c4 = row.insertCell(4);
-                        c4.innerHTML = p[i].userName;
+                        c4.innerHTML = p[i]._user.userName;
                         var c5 = row.insertCell(5);
                         c5.innerHTML = p[i].leave_status;
                         var c6 = row.insertCell(6);
@@ -476,6 +520,55 @@
 //        }
         }
 
+        function getOrderBy(MessagesByContent) {
+
+            MessagesByUsername=document.getElementById("MessagesByUsername").value;
+            MessagesByShop=document.getElementById("MessagesByShop").value;
+            MessagesByContent=document.getElementById("MessagesByContent").value;
+            if ( MessagesByUsername== ""&& MessagesByShop==""&& MessagesByContent=="") {//remond(page,size,sort,operation,key,value)
+                alert("请选择一个条件搜索order")
+            }else if( MessagesByUsername!= ""&& MessagesByShop==""&& MessagesByContent=="") {
+                alert("条件  "+MessagesByUsername)
+                _operation="username";
+                remond('0',default_size,default_sort,_operation,2,MessagesByUsername);
+            }else if( MessagesByUsername== ""&& MessagesByShop!=""&& MessagesByContent=="") {
+                alert("条件  "+MessagesByShop)
+                _operation="shopname";
+                remond('0',default_size,default_sort,_operation,2,MessagesByShop);
+            }else if( MessagesByUsername== ""&& MessagesByShop==""&& MessagesByContent!="") {
+                alert("条件  "+MessagesByContent)
+                remond('0',default_size,default_sort,"like","content",MessagesByContent);
+            }else{
+                alert( "  输入有误  请重新选择一个条件  " )
+            }
+        }
+
+        function orderSearch() {
+
+            orderEndDateMin=document.getElementById("orderEndDateMin").value;
+            orderEndDateMax=document.getElementById("orderEndDateMax").value;
+            if ( orderEndDateMin== "" || orderEndDateMax=="") {
+                alert("请输入日期")
+            }else{
+                remond('0',default_size,"messageid,asc",orderEndDateMin,3,orderEndDateMax);
+            }
+//                   alert("         " )
+        }
+
+//
+//                function OnInput (event) {
+//        //            alert ("The new content: " + event.target.value);
+//
+//                    MessagesByContent=event.target.value;
+//                    getOrderBy(MessagesByContent);
+//                }
+//                // Internet Explorer
+//                function OnPropChanged (event) {
+//                    if (event.propertyName.toLowerCase () == "value") {
+//                        alert ("The new content: " + event.srcElement.value);
+//                    }
+//                }
+
 
     </script>
 
@@ -510,14 +603,42 @@
                 <option value=10>10</option>
             </select>
 
-            <select name="s2" onchange="ch2()">
+            <select name="s0" onchange="ch0()">
                 <option value="0" selected="selected">请选择排序</option>
                 <option value="messageid">id</option>
-                <option value="leave_time">评论的时间</option>
+                <option value="content">评论的内容</option>
                 <%--<option value="amount">订单数量</option>--%>
             </select>
 
+            <form class="form-inline">
+                <div class="form-group">
+                    <div class="input-append date form_datetime">
+                        <label >开始时间：</label>
+                        <input size="16" id="orderEndDateMin" type="text" value="" readonly>
+                        <span class="add-on">
+                                <i class="icon-th glyphicon glyphicon-calendar"></i>
+                            </span>
+                    </div>
+                </div>
+                &nbsp;&nbsp;
+                <div class="form-group">
+                    <div class="input-append date form_datetime">
+                        <label >结束时间：</label>
+                        <input size="16" id="orderEndDateMax" type="text" value="" readonly>
+                        <span class="add-on">
+                                <i class="icon-th glyphicon glyphicon-calendar"></i>
+                            </span>
+                    </div>
 
+
+                </div>
+                <input type="button" class="btn btn-primary btn-ms"  value="开始搜索" onclick="orderSearch()" style="margin:auto 20px;"/>
+                <input type="button" class="btn btn-primary btn-ms"  value="搜索" onclick="getOrderBy()"/>
+                <input size="12" id="MessagesByUsername" type="text" value="" placeholder="请输入用户名查找">
+                <input size="12" id="MessagesByShop" type="text" value="" placeholder="请输入商品名查找">
+                <input size="12" id="MessagesByContent" type="text" value="" placeholder="内容模糊查询" >
+                <%--<input size="12" id="MessagesByContent" type="text" value="" placeholder="内容模糊查询"  oninput="OnInput (event)" onpropertychange="OnPropChanged (event)">--%>
+            </form>
         </div>
         <!-- operate标题结束 -->
         <div class="list">
@@ -545,7 +666,17 @@
 </div>
 
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.zh-CN.min.js"></script>
+<script>
 
+    $(".form_datetime").datepicker({
+        language: 'zh-CN',
+        todayHighlight: 1,
+        autoclose: 1,
+        format: 'yyyy-mm-dd'
+    });
+</script>
 
 <%--查看商品详情的模态框--%>
 

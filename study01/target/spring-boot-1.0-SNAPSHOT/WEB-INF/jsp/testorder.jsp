@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -17,17 +19,19 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
-    <script src="js/ajax.js"></script>
-    <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/rightmain.css">
     <script type="text/javascript">
         var p, maxpage;
         var h;
         var default_size=5;
         var default_sort="orderid,asc";
-
-
-        function ch3(){
+        var _key=0;
+        var orderEndDateMin,orderEndDateMax;
+        var OrderByUsername,OrderByShop,OrderByCategory;
+        var _operation;
+            function ch3(){
             var s1 = document.getElementsByName("s1")[0];
             if (s1.value == "0") {
                 alert("请重新选择记录数！");
@@ -36,8 +40,23 @@
             alert('you choice: 每页' + s1.value +"条记录");
 
             default_size=s1.value;
+                if (_key==2) {
+                    if(_operation=="username"){
+                        remond('0',default_size,default_sort,_operation,_key,OrderByUsername);
+                    }else if( _operation=="shopname"){
+                        remond('0',default_size,default_sort,_operation,_key,OrderByShop);
+                    }else if( _operation=="category"){
+                        remond('0',default_size,default_sort,_operation,_key,OrderByCategory);
+                    }else{
+                        alert("出错");
+                    }
 
-            remond('0',default_size,default_sort);
+                }else if (_key==3) {
+                    remond('0',default_size,default_sort,orderEndDateMin,_key,orderEndDateMax);
+                }else{
+                    remond('0',default_size,default_sort);
+                }
+
         }
 
         function ch2(){
@@ -49,8 +68,23 @@
             alert('you choice: 排序方式为-->' + s2.value);
 
             default_sort=s2.value+",asc";
+            if (_key==2) {
+                if(_operation=="username"){
+                    remond('0',default_size,default_sort,_operation,_key,OrderByUsername);
+                }else if( _operation=="shopname"){
+                    remond('0',default_size,default_sort,_operation,_key,OrderByShop);
+                }else if( _operation=="category"){
+                    remond('0',default_size,default_sort,_operation,_key,OrderByCategory);
+                }else{
+                    alert("出错");
+                }
 
-            remond('0',default_size,default_sort);
+            }else if (_key==3) {
+                remond('0',default_size,default_sort,orderEndDateMin,_key,orderEndDateMax);
+            }else{
+                remond('0',default_size,default_sort);
+            }
+//            remond('0',default_size,default_sort);
         }
 
 
@@ -59,6 +93,9 @@
             remond('0',default_size,default_sort);
 //            alert("kuayu()")
         };
+
+
+
 
         function startTime()
         {
@@ -201,6 +238,22 @@
                     success: function (res) {
                         alert(res);
 //                     remond();
+                        if (_key==2) {
+                            if(_operation=="username"){
+                                remond('0',default_size,default_sort,_operation,_key,OrderByUsername);
+                            }else if( _operation=="shopname"){
+                                remond('0',default_size,default_sort,_operation,_key,OrderByShop);
+                            }else if( _operation=="category"){
+                                remond('0',default_size,default_sort,_operation,_key,OrderByCategory);
+                            }else{
+                                alert("出错");
+                            }
+
+                        }else if (_key==3) {
+                            remond('0',default_size,default_sort,orderEndDateMin,_key,orderEndDateMax);
+                        }else{
+                            remond('0',default_size,default_sort);
+                        }
                     }
                 })
                 alert(orderid + "--" + paystate);
@@ -209,9 +262,20 @@
 
 
 
-        function remond(page,size,sort,operation,key,value) {
+        function remond(page,size,sort,operation,key,value) {//后期想到一个好方法 直接拼接一个url当成参数传递过来就好了 可惜太迟了 现在改的话麻烦了点
+            var url="http://101.200.56.75/order/orderspage?page="+page+"&size="+size+"&sort="+sort+"&operation="+operation+"&key="+key+"&value="+value;
+            if(key==2){
+                url="http://101.200.56.75/datastatistics/username2?&page="+page+"&size="+size+"&sort="+default_sort+"&"+operation+"="+value;
+                _key=2;
+                alert(url)
+            }
+            if(key==3){
+                url="http://101.200.56.75/datastatistics/date?&page="+page+"&size="+size+"&sort="+sort+"&field=ordertime"+"&orderEndDateMin="+operation+"&orderEndDateMax="+value;
+                _key=3;
+                alert(url+"    key="+key)
+            }
             $.ajax({
-                url: "http://101.200.56.75/order/orderspage?page="+page+"&size="+size+"&sort="+sort+"&operation="+operation+"&key="+key+"&value="+value,
+                url: url,
                 type: "GET",
                 dataType: "json",
                 success: function (res) {
@@ -239,18 +303,18 @@
                         var c6 = row.insertCell(6);
                         c6.innerHTML = p[i]._shop._category.category;
                         var c7 = row.insertCell(7);
-                        c7.innerHTML = "<a href='#' title='修改商品'"
+                        c7.innerHTML = "<shiro:hasPermission name="add">"+"<a href='#' title='修改商品'"
                             + "onclick=\"change('" + p[i].ordertime + "','" + p[i].orderid + "','" +  p[i].paystate + "','" + p[i].moneySum + "','" + p[i].amount + "','" + p[i].userid + "','" + p[i].shopid + "','" + p[i]._shop.shopname + "','" + p[i]._user.userName + "')\">"
                             + "<span class='glyphicon glyphicon-cog'></span>"
-                            + "</a>"
+                            + "</a>"+"</shiro:hasPermission>"
                             + "<a href='#' title='查看商品'"
                             + "onclick=\"detail('" + p[i].moneySum + "','" + p[i].orderid + "','" + p[i]._shop.shopname + "','" + p[i]._shop.des + "','" + p[i]._user.userName + "','" + p[i].ordertime+ "')\">"
                             + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
                             + "</a>"
-                            + "<a href='#' title='已售商品'"
+                            + "<shiro:hasPermission name="del">"+"<a href='#' title='已售商品'"
                             + "onclick=\"dodelete('"  + p[i].orderid + "','" + p[i].paystate  + "','" + p[i].shopname  + "')\">"
                             + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                            + "</a>";
+                            + "</a>"+"</shiro:hasPermission>";
 
                     }
 
@@ -458,7 +522,22 @@
                         p=res.payload;
                         alert(p.orderid + "-----success")
 //                        alert("回---调---调---试")
-                        remond('0',default_size,default_sort);
+                        if (_key==2) {
+                            if(_operation=="username"){
+                                remond('0',default_size,default_sort,_operation,_key,OrderByUsername);
+                            }else if( _operation=="shopname"){
+                                remond('0',default_size,default_sort,_operation,_key,OrderByShop);
+                            }else if( _operation=="category"){
+                                remond('0',default_size,default_sort,_operation,_key,OrderByCategory);
+                            }else{
+                                alert("出错");
+                            }
+
+                        }else if (_key==3) {
+                            remond('0',default_size,default_sort,orderEndDateMin,_key,orderEndDateMax);
+                        }else{
+                            remond('0',default_size,default_sort);
+                        }
                         $('#myModal2').modal('toggle')
                     }
                 })
@@ -467,7 +546,53 @@
 //        }
         }
 
+               function orderSearch() {
 
+                   orderEndDateMin=document.getElementById("orderEndDateMin").value;
+                   orderEndDateMax=document.getElementById("orderEndDateMax").value;
+                   if ( orderEndDateMin== "" || orderEndDateMax=="") {
+                       alert("请输入日期")
+                   }else{
+                       remond('0',default_size,"orderid,asc",orderEndDateMin,3,orderEndDateMax);
+                   }
+//                   alert("         " )
+               }
+
+
+        function getOrderBy() {
+
+            OrderByUsername=document.getElementById("OrderByUsername").value;
+            OrderByShop=document.getElementById("OrderByShop").value;
+            OrderByCategory=document.getElementById("OrderByCategory").value;
+            if ( OrderByUsername== ""&& OrderByShop==""&& OrderByCategory=="") {//remond(page,size,sort,operation,key,value)
+                     alert("请选择一个条件搜索order")
+            }else if( OrderByUsername!= ""&& OrderByShop==""&& OrderByCategory=="") {
+                alert("条件  "+OrderByUsername)
+                _operation="username";
+                remond('0',default_size,default_sort,_operation,2,OrderByUsername);
+            }else if( OrderByUsername== ""&& OrderByShop!=""&& OrderByCategory=="") {
+                alert("条件  "+OrderByShop)
+                _operation="shopname";
+                remond('0',default_size,default_sort,_operation,2,OrderByShop);
+            }else if( OrderByUsername== ""&& OrderByShop==""&& OrderByCategory!="") {
+                alert("条件  "+OrderByCategory)
+                _operation="category";
+                remond('0',default_size,default_sort,_operation,2,OrderByCategory);
+            }else{
+                alert( "  输入有误  请重新选择一个条件  " )
+            }
+        }
+
+//        function OnInput (event) {
+////            alert ("The new content: " + event.target.value);
+//            getOrderBy();
+//        }
+//        // Internet Explorer
+//        function OnPropChanged (event) {
+//            if (event.propertyName.toLowerCase () == "value") {
+//                alert ("The new content: " + event.srcElement.value);
+//            }
+//        }
 
     </script>
 
@@ -491,7 +616,9 @@
     </div>
     <div class="operate">
         <div class="pull-left">
-            <input type="button" onclick="download()" name="" value="导出EEXCEL" class="btn  btn-success">
+<shiro:hasRole name="admin">
+    <input type="button" onclick="download()" name="" value="导出EEXCEL" class="btn  btn-success">
+</shiro:hasRole>
             <select name="s1" onchange="ch3()">
                 <option value="0" selected="selected">请选择每页记录数</option>
                 <option value=5>5</option>
@@ -505,6 +632,37 @@
                 <option value="moneySum">订单金额</option>
                 <option value="amount">订单数量</option>
             </select>
+
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <div class="input-append date form_datetime">
+                        <label >开始时间：</label>
+                        <input size="16" id="orderEndDateMin" type="text" value="" readonly>
+                        <span class="add-on">
+                                <i class="icon-th glyphicon glyphicon-calendar"></i>
+                            </span>
+                    </div>
+                </div>
+                &nbsp;&nbsp;
+                <div class="form-group">
+                    <div class="input-append date form_datetime">
+                        <label >结束时间：</label>
+                        <input size="16" id="orderEndDateMax" type="text" value="" readonly>
+                        <span class="add-on">
+                                <i class="icon-th glyphicon glyphicon-calendar"></i>
+                            </span>
+                    </div>
+
+
+                </div>
+                <input type="button" class="btn btn-primary btn-ms"  value="开始搜索" onclick="orderSearch()" style="margin:auto 20px;"/>
+                <input type="button" class="btn btn-primary btn-ms"  value="搜索" onclick="getOrderBy()"/>
+                <input size="12" id="OrderByUsername" type="text" value="" placeholder="请输入用户名查找">
+                <%--<input size="12" id="OrderByUsername" type="text" value="" placeholder="请输入用户名查找"  oninput="OnInput (event)" onpropertychange="OnPropChanged (event)">--%>
+                <input size="12" id="OrderByShop" type="text" value="" placeholder="请输入商品名查找">
+                <input size="12" id="OrderByCategory" type="text" value="" placeholder="请输入类型名查找">
+            </form>
 
 
         </div>
@@ -534,8 +692,17 @@
 </div>
 
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.zh-CN.min.js"></script>
+<script>
 
-
+    $(".form_datetime").datepicker({
+        language: 'zh-CN',
+        todayHighlight: 1,
+        autoclose: 1,
+        format: 'yyyy-mm-dd'
+    });
+</script>
 <%--查看商品详情的模态框--%>
 
 <!-- Modal -->
@@ -679,17 +846,17 @@
                                     <input type="text" class="form-control" id="paystate" name="paystate"
                                            placeholder="请从下面选择paystate" value=""
                                     >
-                                    <select name="s2" onchange="ch2()">
+                                    <select name="s4" onchange="ch4()">
                                         <option value="" selected="selected">请选择订单状态</option>
                                         <option value=0>0代表未付款</option>
                                         <option value=1>1正常已经付款</option>
                                     </select>
 
                                     <script type="text/javascript">
-                                        function ch2(){
-                                            var s2 = document.getElementsByName("s2")[0];
-                                            $("#paystate").val(s2.value);
-                                            alert('you choice:' + s2.value);
+                                        function ch4(){
+                                            var s4 = document.getElementsByName("s4")[0];
+                                            $("#paystate").val(s4.value);
+                                            alert('you choice:' + s4.value);
                                         }
                                     </script>
                                 </div>

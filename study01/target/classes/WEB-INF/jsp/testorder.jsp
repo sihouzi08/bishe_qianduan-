@@ -270,7 +270,7 @@
                 alert(url)
             }
             if(key==3){
-                url="http://101.200.56.75/datastatistics/date?&page="+page+"&size="+size+"&sort="+sort+"&orderEndDateMin="+operation+"&orderEndDateMax="+value;
+                url="http://101.200.56.75/datastatistics/date?&page="+page+"&size="+size+"&sort="+sort+"&field=ordertime"+"&orderEndDateMin="+operation+"&orderEndDateMax="+value;
                 _key=3;
                 alert(url+"    key="+key)
             }
@@ -582,6 +582,18 @@
                 alert( "  输入有误  请重新选择一个条件  " )
             }
         }
+
+//        function OnInput (event) {
+////            alert ("The new content: " + event.target.value);
+//            getOrderBy();
+//        }
+//        // Internet Explorer
+//        function OnPropChanged (event) {
+//            if (event.propertyName.toLowerCase () == "value") {
+//                alert ("The new content: " + event.srcElement.value);
+//            }
+//        }
+
     </script>
 
 
@@ -647,6 +659,7 @@
                 <input type="button" class="btn btn-primary btn-ms"  value="开始搜索" onclick="orderSearch()" style="margin:auto 20px;"/>
                 <input type="button" class="btn btn-primary btn-ms"  value="搜索" onclick="getOrderBy()"/>
                 <input size="12" id="OrderByUsername" type="text" value="" placeholder="请输入用户名查找">
+                <%--<input size="12" id="OrderByUsername" type="text" value="" placeholder="请输入用户名查找"  oninput="OnInput (event)" onpropertychange="OnPropChanged (event)">--%>
                 <input size="12" id="OrderByShop" type="text" value="" placeholder="请输入商品名查找">
                 <input size="12" id="OrderByCategory" type="text" value="" placeholder="请输入类型名查找">
             </form>

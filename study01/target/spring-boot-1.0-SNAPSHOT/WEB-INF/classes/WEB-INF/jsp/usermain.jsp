@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -156,18 +156,18 @@
                         c9.innerHTML = userstatus;
 
                         var c10 = row.insertCell(9);
-                        c10.innerHTML = "<a href='#' title='用户修改'"
+                        c10.innerHTML = "<shiro:hasPermission name="add">"+"<a href='#' title='用户修改'"
                             + "onclick=\"change('" + p[i].userName + "','" + p[i].userid + "','" + p[i].password + "','" + p[i].email + "','" + p[i].school + "','" + p[i].userstatus + "','" + p[i].court + "','" + p[i].professional + "','" + p[i].phone + "')\">"
                             + "<span class='glyphicon glyphicon-cog'></span>"
-                            + "</a>"
+                            + "</a>"+"</shiro:hasPermission>"
                             + "<a href='#' title='用户详情'"
                             + "onclick=\"detail('" + p[i].userName + "','" + p[i].userid + "','" + p[i].password + "','" + p[i].email + "','" + p[i].school + "')\">"
                             + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
                             + "</a>"
-                            + "<a href='#' title='用户拉黑'"
+                            + "<shiro:hasPermission name="del">"+"<a href='#' title='用户拉黑'"
                             + "onclick=\"checkDelete('"  + p[i].userid + "','" + p[i].userName  + "','" + p[i].userstatus  + "')\">"
                             + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                            + "</a>";
+                            + "</a>"+"</shiro:hasPermission>";
 
                     }
 
@@ -421,11 +421,11 @@
 
             </div>
         </div>
-        <hr>
+        <hr><shiro:hasRole name="admin">
         <div style="text-align: center">
             如果您需要打印user表单，请点击右边的按钮：
             <input type="button" class="btn btn-primary addUserAndDishes" value="导出excel" onclick="download()" />
-        </div>
+        </div></shiro:hasRole>
     </div>
     <div style="height:1px;width: 100%;background: #CCC;margin-bottom: 10px"></div>
     <footer>

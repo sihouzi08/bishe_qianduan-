@@ -15,7 +15,7 @@
     <title>main</title>
 
     <!-- Bootstrap -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
     <link rel="stylesheet" type="text/css" href="css/rightmain.css">
 </head>
@@ -79,9 +79,10 @@
 
 </div>
 <!-- 整个容器结束 -->
-<script src="../public/js/jquery-3.1.1.js"></script>
+<%--<script src="../public/js/jquery-3.1.1.js"></script>--%>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
     //alert($)
 </script>

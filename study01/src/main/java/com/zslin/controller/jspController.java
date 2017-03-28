@@ -20,6 +20,13 @@ public class jspController {
         return "dd1";
     }
 
+
+    @RequestMapping("/zhuce")
+    public String zhuce_jsp_test(){
+        logger.info("zhuce_jsptest");
+        return "zhuce";
+    }
+
     @RequestMapping("/shopmain")
     public String shopmain_jsp_test(){
         logger.info("shopmain_jsptest");

@@ -24,34 +24,41 @@
     <link rel="stylesheet" type="text/css" href="css/rightmain.css">
     <script type="text/javascript">
         var p, maxpage;
-        var h;
+        var value;
         var default_size=5;
         var default_sort="shopid,asc";
-
-        function ch3(){
-            var s1 = document.getElementsByName("s1")[0];
-            if (s1.value == "0") {
+        var controller=0;
+        function ch0(){
+            var s0 = document.getElementsByName("s0")[0];
+            if (s0.value == "0") {
                 alert("请重新选择记录数！");
                 return false;
             }
-            alert('you choice: 每页' + s1.value +"条记录");
+            alert('you choice: 每页' + s0.value +"条记录");
 
-            default_size=s1.value;
+            default_size=s0.value;
+            if (controller == 0) {
+                remond('0', default_size, default_sort);
+            } else {
+                remond('0', default_size, default_sort, 'like', 'shopname', value);
+            }
 
-            remond('0',default_size,default_sort);
         }
 
-        function ch2(){
-            var s2 = document.getElementsByName("s2")[0];
-            if (s2.value == "0") {
+        function ch1(){
+            var s3 = document.getElementsByName("s3")[0];
+            if (s3.value == "0") {
                 alert("请重新选择排序方式！");
                 return false;
             }
-            alert('you choice: 排序方式为-->' + s2.value);
+            alert('you choice: 排序方式为-->' + s3.value);
 
-            default_sort=s2.value+",asc";
-
-            remond('0',default_size,default_sort);
+            default_sort=s3.value+",asc";
+            if (controller == 0) {
+                remond('0', default_size, default_sort);
+            } else {
+                remond('0', default_size, default_sort, 'like', 'shopname',value);
+            }
         }
 
         window.onload = function () {
@@ -400,6 +407,26 @@
 //            alert("check()--调---试")
         }
 
+
+
+                function OnInput (event) {
+//                    alert ("The new content: " + event.target.value);
+                    controller=1;
+                    value=event.target.value;
+                    remond('0',default_size,default_sort,'like','shopname',value);
+                }
+                // Internet Explorer
+                function OnPropChanged (event) {
+                    if (event.propertyName.toLowerCase () == "value") {
+                        alert ("The new content: " + event.srcElement.value);
+                        controller=1;
+                        value=event.target.value;
+                        remond('0',default_size,default_sort,'like','shopname',value);
+                    }
+                }
+
+
+
     </script>
 
 </head>
@@ -424,20 +451,21 @@
             <shiro:hasRole name="admin">
                 <input type="button" onclick="download()" name="" value="导出EEXCEL" class="btn  btn-success">
             </shiro:hasRole>
-            <select name="s1" onchange="ch3()">
+            <select name="s0" onchange="ch0()">
                 <option value="0" selected="selected">请选择每页记录数</option>
                 <option value=5>5</option>
                 <option value=8>8</option>
                 <option value=10>10</option>
             </select>
 
-            <select name="s2" onchange="ch2()">
+            <select name="s3" onchange="ch1()">
                 <option value="0" selected="selected">请选择排序</option>
                 <option value="shopid">id</option>
                 <option value="price">价格</option>
                 <%--<option value="">10</option>--%>
             </select>
 
+            <input size="12" id="ShopBySearch" type="text" value="" placeholder="请输入查找"  oninput="OnInput (event)" onpropertychange="OnPropChanged (event)">
 
         </div>
         <!-- operate标题结束 -->
