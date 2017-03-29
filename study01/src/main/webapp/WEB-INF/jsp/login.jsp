@@ -161,7 +161,7 @@
                         <%--<form action="${pageContext.request.contextPath }/login" method="post" class="form-horizontal">--%>
                         <!-- 让表单在一行中显示form-horizontal -->
                         <div class="form-group">
-                            <label for="username" class="col-lg-2 control-label">用&nbsp;户&nbsp;名:&nbsp;</label><!--style="color:black;"-->
+                            <label for="username" class="col-lg-2 control-label">邮&nbsp;箱&nbsp;名:&nbsp;</label><!--style="color:black;"-->
                             <div class="col-lg-6">
                                 <input type="text" name="username" id="email" class="form-control" placeholder="admin">
                                 <form:errors path="username" cssClass="error"/>

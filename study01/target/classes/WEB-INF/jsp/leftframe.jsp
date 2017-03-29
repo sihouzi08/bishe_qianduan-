@@ -96,25 +96,25 @@
         <li> <a class="head"  >用户管理</a>
             <ul>
                 <li><a href="/testuser" target="rightFrame">查看并操作</a></li>
-                <li><a href="/putongyonghutest" target="rightFrame">普通用户</a></li>
+                <li><a href="/usermain" target="rightFrame">操作</a></li>
             </ul>
         </li>
         <li> <a class="head">订单管理</a>
             <ul>
                 <li><a href="/testorder" target="rightFrame">查看并操作</a></li>
-                <li><a href="/yudingdan" target="rightFrame">待处理订单</a></li>
+                <li><a href="/ordermain" target="rightFrame">操作</a></li>
             </ul>
         </li>
         <li> <a class="head">商品管理</a>
             <ul>
                 <li><a href="/testshop" target="rightFrame">查看并操作</a></li>
-                <li><a href="/ddd" target="rightFrame">查看/删除分类</a></li>
+                <li><a href="/shopmain" target="rightFrame">操作</a></li>
             </ul>
         </li>
         <li> <a class="head">留言评论管理</a>
             <ul>
                 <li><a href="/testmessages" target="rightFrame">查看并操作</a></li>
-                <li><a href="/lookliuyan" target="rightFrame">查看/删除评论</a></li>
+                <li><a href="/messagesmain" target="rightFrame">操作</a></li>
             </ul>
         </li>
 
