@@ -15,10 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>评论管理</title>
-
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
     <script src="js/ajax.js"></script>
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
     <link rel="stylesheet" type="text/css" href="css/rightmain.css">
@@ -90,6 +90,7 @@
         window.onload = function () {
             remond('0',default_size,default_sort);
 //            alert("kuayu()")
+            startTime();
         };
 
         function startTime()
@@ -234,6 +235,7 @@
                     success: function (res) {
                         alert(res);
 //                     remond();
+                        remond('0',default_size,default_sort);
                     }
                 })
                 alert(messageid + "--" + messages_status);
@@ -244,24 +246,6 @@
 
 
 
-        //显示商品修改调用模态框
-        function change(name, shopid, shop_status, des, price) {
-
-            document.getElementById("shopid2").innerHTML = shopid;
-
-//            document.amendShopesForm.shopesName.value == name;
-
-            $("#shopesName").val(name);//jquery通过id属性并修改value属性为name
-            $("#shopesTxt").val(des);//jquery通过id属性并修改value属性为des
-            $("#shopesPrice").val(price);//jquery通过id属性并修改value属性为price
-//            document.getElementById("shopesTxt").value == des;
-//
-//            document.getElementById("shopesPrice").value == price;
-
-//            document.getElementById("shop_status2").value == shop_status;
-
-            $('#myModal2').modal('show');
-        }
 
         function remond(page,size,sort,operation,key,value) {
             var url="http://101.200.56.75/messages/messagespage?page="+page+"&size="+size+"&sort="+sort+"&operation="+operation+"&key="+key+"&value="+value;
@@ -575,7 +559,7 @@
 
 
 </head>
-<body onload="startTime()">
+<body >
 <div class="iframecontent">
     <div class="pos">
         <i class="icoh"></i>

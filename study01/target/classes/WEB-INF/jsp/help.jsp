@@ -5,7 +5,9 @@
   Time: 20:07
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <script type="text/javascript">
     if (window.top.location.href != location.href) {
@@ -81,10 +83,10 @@
                         <hr/>
                         <p>
                         <h3>
-                            我的信息：<h4><span>您好，侯圣燊</span></h4>
+                            我的信息：<h4><span>您好，<shiro:principal/></span></h4>
                         </h3>
                         <h3>
-                            系统信息：<h4><span>系统所用技术：springboot,js,kong api gateway,jpa,sql</span></h4>
+                            系统信息：<h4><span>系统所用技术：springboot,js,kong api gateway,jpa,jsp</span></h4>
                         </h3>
                         <h3>网站信息： <h4><span>网址：http://101.200.56.75:8888/indexmain</span></h4></h3>
                         <h3>

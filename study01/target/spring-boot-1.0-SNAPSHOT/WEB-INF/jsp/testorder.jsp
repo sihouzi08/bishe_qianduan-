@@ -15,10 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>订单管理</title>
-
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/rightmain.css">
@@ -92,6 +92,7 @@
         window.onload = function () {
             remond('0',default_size,default_sort);
 //            alert("kuayu()")
+            startTime();
         };
 
 
@@ -598,7 +599,7 @@
 
 
 </head>
-<body onload="startTime()">
+<body >
 <div class="iframecontent">
     <div class="pos">
         <i class="icoh"></i>

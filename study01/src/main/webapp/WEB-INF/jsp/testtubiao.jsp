@@ -6,8 +6,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>广商淘-Datastatistics</title>
-
+    <title>GuangShangTao - Datastatistics</title>
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/datepicker3.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
@@ -42,7 +42,7 @@
         window.onload =function () {
             test();
             var a = 5.0;
-
+            startTime();
             Highcharts.chart('container1', {
                 chart: {
                     plotBackgroundColor: null,
@@ -217,6 +217,31 @@
         }
 //        shopTotalElements,orderTotalElements,messagesTotalElements,userTotalElements;
 
+
+        function startTime()
+        {
+            var today=new Date()
+            var h=today.getHours()
+            var m=today.getMinutes()
+            var s=today.getSeconds()
+// add a zero in front of numbers<10
+            m=checkTime(m)
+            s=checkTime(s)
+            document.getElementById('txt').innerHTML="现在时间:<span class='glyphicon glyphicon-time'></span>&nbsp;"+ h+":"+m+":"+s
+//            document.getElementById('timeid').innerHTML="<span class='glyphicon glyphicon-time'></span>&nbsp;"+ h+":"+m+":"+s
+            t=setTimeout('startTime()',500)
+        }
+
+        function checkTime(i)
+        {
+            if (i<10)
+            {i="0" + i}
+            return i
+        }
+        function back(){
+            window.history.back(-1);
+        }
+
     </script>
 
 
@@ -237,8 +262,8 @@
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <shiro:principal/> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                        <li><a href="/thisuser"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href="/help"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                         <li><a href="${pageContext.request.contextPath }/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </ul>
                 </li>
@@ -254,11 +279,11 @@
         </div>
     </form>
     <ul class="nav menu">
-        <li class="active"><a href="#"><span class="glyphicon glyphicon-dashboard"></span> 数据操作</a></li>
-        <li><a href="/shopmain"><span class="glyphicon glyphicon-shopping-cart"></span> 商品操作</a></li>
-        <li><a href="/usermain"><span class="glyphicon glyphicon-user"></span> 用户操作</a></li>
-        <li><a href="/ordermain"><span class="glyphicon glyphicon-list-alt"></span> 订单操作</a></li>
-        <li><a href="/messagesmain"><span class="glyphicon glyphicon-comment"></span> 评论操作</a></li>
+        <li class="active"><a href="/testtubiao"><span class="glyphicon glyphicon-dashboard"></span> 数据操作</a></li>
+        <li><a href="/testshop"><span class="glyphicon glyphicon-shopping-cart"></span> 商品操作</a></li>
+        <li><a href="/testuser"><span class="glyphicon glyphicon-user"></span> 用户操作</a></li>
+        <li><a href="/testorder"><span class="glyphicon glyphicon-list-alt"></span> 订单操作</a></li>
+        <li><a href="/testmessages"><span class="glyphicon glyphicon-comment"></span> 评论操作</a></li>
         <%--<li><a href="panels.html"><span class="glyphicon glyphicon-info-sign"></span> Alerts &amp; Panels</a></li>--%>
         <li class="parent ">
             <a href="#">
@@ -295,8 +320,12 @@
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
-            <li><a href="#"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li> [<a href="/indexmain"><span class='glyphicon glyphicon-home'></span>&nbsp;主页</a>]</li>
             <li class="active">Datastatistics</li>
+            <li> [<a href="/time" id="txt"> </a>]</li>
+            <li>[<a href="#" onclick="back()"><span class='glyphicon glyphicon-share-alt'></span>&nbsp;返回 </a> ]</li>
+            <li> [ <a href="/help" ><span class='glyphicon glyphicon-question-sign'></span>&nbsp;帮助</a>]</li>
+            <li> [<a href="/thisuser"><span class='glyphicon glyphicon-user'></span>&nbsp;用户</a>]&nbsp;&nbsp;</li>
         </ol>
     </div><!--/.row-->
 
@@ -406,7 +435,7 @@
 </div>	<!--/.main-->
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
 <%--<script src="js/jquery-1.11.1.min.js"></script>--%>
 <script src="js/bootstrap.min.js"></script>
 <%--<script src="js/chart.min.js"></script>--%>

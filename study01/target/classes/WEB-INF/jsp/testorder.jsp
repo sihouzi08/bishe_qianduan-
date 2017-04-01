@@ -15,10 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>订单管理</title>
-
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" type="text/css" href="css/rightmain.css">
@@ -92,6 +92,7 @@
         window.onload = function () {
             remond('0',default_size,default_sort);
 //            alert("kuayu()")
+            startTime();
         };
 
 
@@ -225,7 +226,13 @@
 
 
         function dodelete(orderid,paystate,name){
-            msg = '是否将ID号' + orderid + '的订单状态修改？';
+
+            if (paystate == 0) {
+                msg = '是否将ID号-' + orderid + '-的订单修改为已付款？';
+            } else {
+                msg = '是否将ID号-' + orderid + '-的评论改为未付款？';
+            }
+
             if (confirm(msg)) {
                 if (paystate == 0) {
                     paystate = 1;
@@ -298,8 +305,9 @@
                         c3.innerHTML = p[i].moneySum;
                         var c4 = row.insertCell(4);
                         c4.innerHTML = p[i].amount;
-                        var c5 = row.insertCell(5);
-                        c5.innerHTML = p[i].paystate;
+                        var paystate = p[i].paystate == "0" ? "未付" : "已付";
+                        var c5 = row.insertCell(4);
+                        c5.innerHTML = paystate;
                         var c6 = row.insertCell(6);
                         c6.innerHTML = p[i]._shop._category.category;
                         var c7 = row.insertCell(7);
@@ -598,7 +606,7 @@
 
 
 </head>
-<body onload="startTime()">
+<body >
 <div class="iframecontent">
     <div class="pos">
         <i class="icoh"></i>

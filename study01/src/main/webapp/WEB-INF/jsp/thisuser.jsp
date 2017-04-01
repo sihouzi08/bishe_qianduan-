@@ -90,7 +90,7 @@
                         <h3>
                             登录状态：<h4><span>已经登录 安全</span></h4>
                         </h3>
-                        <h3>用户权限： <h4><span>最高</span></h4></h3>
+                        <h3>用户权限： <h4><span>查看</span></h4><shiro:hasRole name="admin"><h4><span>删除修改增加下载</span></h4></shiro:hasRole></h3>
                     </div>
                 </div>
             </div>

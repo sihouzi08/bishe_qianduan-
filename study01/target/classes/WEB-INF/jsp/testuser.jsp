@@ -15,10 +15,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>用户管理</title>
-
+    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+
     <script src="js/ajax.js"></script>
     <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
     <link rel="stylesheet" type="text/css" href="css/rightmain.css">
@@ -64,6 +64,7 @@
         window.onload =function() {
             remond(0,default_size,default_sort)
 //            alert("users()")
+            startTime();
         }
         function startTime()
         {
@@ -369,7 +370,11 @@
         }
 
         function dodelete(id, name,userstatus) {
-            msg = '是否将' + name + '下架？';
+            if (userstatus == 0) {
+                msg = '是否恢复用户-' + name + '-身份？';
+            } else {
+                msg = '是否将用户-' + name + '-拉黑？';
+            }
             if (confirm(msg)) {
                 if (userstatus == 0) {
                     userstatus = 1;
@@ -421,7 +426,7 @@
     </script>
 
 </head>
-<body onload="startTime()">
+<body >
 <div class="iframecontent">
     <div class="pos">
         <i class="icoh"></i>

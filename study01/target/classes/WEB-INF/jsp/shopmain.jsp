@@ -1,25 +1,36 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
-    <link rel="stylesheet" href="css/common.css" type="text/css"/>
-    <title>"广商淘"系统</title>
-    <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GuangShangTao - Shopmain</title>
+
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/datepicker3.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <%--<link rel="stylesheet" type="text/css" href="css/main.css">--%>
+    <%--<link rel="stylesheet" type="text/css" href="css/dashboard.css">--%>
+    <%--<link rel="stylesheet" href="css/common.css" type="text/css"/>--%>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+
     <script src="js/ajax.js"></script>
+    <![endif]-->
+
     <script type="text/javascript">
         var p, maxpage;
         var h;
         var default_size=5;
         var default_sort="shopid,asc";
-        window.onload = function () {
-            remond('0',default_size,default_sort);
-//            alert("kuayu()")
-        };
+//        window.onload = function () {
+//            remond('0',default_size,default_sort);
+//            alert("shop()")
+//        };
 
 
 
@@ -56,9 +67,9 @@
             var li = document.createElement("li");
 
             li.innerHTML = "<a href='#'"
-                    + "onclick=\"UponeOrNextTest('" + operation + "','" + key + "','" + value + "','" + page + "','0')\""
-                    + " aria-label='Next'>"
-                    + "<span aria-hidden='true'>&raquo;</span></a>";
+                + "onclick=\"UponeOrNextTest('" + operation + "','" + key + "','" + value + "','" + page + "','0')\""
+                + " aria-label='Next'>"
+                + "<span aria-hidden='true'>&raquo;</span></a>";
             ul.appendChild(li);
 
             var li2 = document.createElement("li");
@@ -105,10 +116,10 @@
 
             //设置 li 属性，如 id
 //            li.setAttribute("id", page);
-               var _page=page-1;
+            var _page=page-1;
             li.innerHTML = "<a href='#'"
-                    + "onclick=\"remond('" + _page + "','" + default_size + "','" + default_sort + "','" + operation + "','" + key + "','" + value + "')\">"
-                    + page + "</a>";
+                + "onclick=\"remond('" + _page + "','" + default_size + "','" + default_sort + "','" + operation + "','" + key + "','" + value + "')\">"
+                + page + "</a>";
             ul.appendChild(li);
         }
 
@@ -129,7 +140,11 @@
 
 
         function status(shopid,shop_status,name){
-            msg = '是否将' + name + '下架？';
+            if (shop_status == 0) {
+                msg = '是否将商品-' + name + '-上架？';
+            } else {
+                msg = '是否将商品-' + name + '-下架？';
+            }
             if (confirm(msg)) {
                 if (shop_status == 0) {
                     shop_status = 1;
@@ -175,7 +190,7 @@
                     maxpage = res.payload.totalPages;
                     $("#pager").html("");
                     $("#ShopTable  tr:not(:first)").html("");
-                     page++;
+                    page++;
                     addElementLiFirstAndUpone("pager",operation,key,value,page);
                     var ShopTable = document.getElementById("ShopTable");
                     for (var i = 0; i < p.length; i++) {
@@ -197,17 +212,17 @@
                         c8.innerHTML = p[i]._category.category
                         var c7 = row.insertCell(7);
                         c7.innerHTML = "<shiro:hasPermission name="add">"+"<a href='#' title='修改商品'"
-                                + "onclick=\"change('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].price + "','" + p[i].des + "','" + p[i].userName + "','" + p[i].userphne + "','" + p[i].category_id + "','" + p[i].picture + "')\">"
-                                + "<span class='glyphicon glyphicon-cog'></span>"
-                                + "</a>"+"</shiro:hasPermission>"
-                                +"<a href='#' title='商品详情'"
-                                + "onclick=\"detail('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].des + "','" + p[i].price + "','" + p[i].userName + "','" + p[i].picture + "','" + p[i].userphne + "')\">"
-                                + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
-                                + "</a>"
-                                + "<shiro:hasPermission name="del">"+"<a href='#' title='商品下架'"
-                                + "onclick=\"status('"  + p[i].shopid + "','" + p[i].shop_status  + "','" + p[i].shopname  + "')\">"
-                                + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
-                                + "</a>"+"</shiro:hasPermission>";
+                            + "onclick=\"change('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].price + "','" + p[i].des + "','" + p[i].userName + "','" + p[i].userphne + "','" + p[i].category_id + "','" + p[i].picture + "')\">"
+                            + "<span class='glyphicon glyphicon-cog'></span>"
+                            + "</a>"+"</shiro:hasPermission>"
+                            +"<a href='#' title='商品详情'"
+                            + "onclick=\"detail('" + p[i].shopname + "','" + p[i].shopid + "','" + p[i].shop_status + "','" + p[i].des + "','" + p[i].price + "','" + p[i].userName + "','" + p[i].picture + "','" + p[i].userphne + "')\">"
+                            + "<span class='glyphicon glyphicon-list-alt'></span> &nbsp"
+                            + "</a>"
+                            + "<shiro:hasPermission name="del">"+"<a href='#' title='商品下架'"
+                            + "onclick=\"status('"  + p[i].shopid + "','" + p[i].shop_status  + "','" + p[i].shopname  + "')\">"
+                            + "<span class='glyphicon glyphicon-remove'></span> &nbsp"
+                            + "</a>"+"</shiro:hasPermission>";
 
                     }
 
@@ -228,16 +243,16 @@
         }
 
 
-//        {
-//            "shopname": "a",
-//            "des": "b",
-//            "userName": "c",
-//            "userphne": "13723697188",
-//            "categoryid": "c",
-//            "picture": "u",
-//            "price": "24",
-//            "shop_status": "1"
-//        }
+        //        {
+        //            "shopname": "a",
+        //            "des": "b",
+        //            "userName": "c",
+        //            "userphne": "13723697188",
+        //            "categoryid": "c",
+        //            "picture": "u",
+        //            "price": "24",
+        //            "shop_status": "1"
+        //        }
         function check() {
             msg = '是否将' + name + '下架？';
             var isphone = /^(13[0-9]|14(5|7)|15(0|1|2|3|5|6|7|8|9)|18[0-9])\d{8}$/;
@@ -256,16 +271,16 @@
                     alert('你所输入的不是手机号码');
                     return false;
                 }
-            if (document.getElementById("_des").value == "") {
-                alert("请输入shuoming！");
-                document.forms.amendShopesForm._des.focus();
-                return false;
-            }
-            if (document.getElementById("shopesPrice").value == "") {
-                alert("请输入菜品jiage！");
-                document.forms.amendShopesForm.shopesPrice.focus();
-                return false;
-            }
+                if (document.getElementById("_des").value == "") {
+                    alert("请输入shuoming！");
+                    document.forms.amendShopesForm._des.focus();
+                    return false;
+                }
+                if (document.getElementById("shopesPrice").value == "") {
+                    alert("请输入菜品jiage！");
+                    document.forms.amendShopesForm.shopesPrice.focus();
+                    return false;
+                }
                 if (document.getElementById("userName").value == "") {
                     alert("请输入userName！");
                     document.forms.amendShopesForm.userName.focus();
@@ -301,360 +316,470 @@
                 }
                 picture= document.getElementById("picture").value;
                 name = document.getElementById("shopesName").value;
-            des = document.getElementById("_des").value;
-            price = document.getElementById("shopesPrice").value;
-            shopid = document.getElementById("shopid2").innerHTML;
+                des = document.getElementById("_des").value;
+                price = document.getElementById("shopesPrice").value;
+                shopid = document.getElementById("shopid2").innerHTML;
 
                 userName = document.getElementById("userName").value;
 
 //            alert(shopid + "--" + des + "--" + price);
-            var jsonput={
-                "shopname": name,
-                "des": des,
-                "userName": userName,
-                "category_id":category_id,
-                "userphne": userphne,
-                "picture": picture,
-                "price": price,
-                "shop_status":shop_status
-            };
-            $.ajax({
-                url: "http://101.200.56.75/shop/update/"+shopid,
-                type: "PUT",
-                data:JSON.stringify(jsonput),
-                dataType: 'json',
-                contentType:"application/json; charset=utf-8",
-                processData:false,
-                cache:false,
-                success: function (res) {
-                    p=res.payload;
+                var jsonput={
+                    "shopname": name,
+                    "des": des,
+                    "userName": userName,
+                    "category_id":category_id,
+                    "userphne": userphne,
+                    "picture": picture,
+                    "price": price,
+                    "shop_status":shop_status
+                };
+                $.ajax({
+                    url: "http://101.200.56.75/shop/update/"+shopid,
+                    type: "PUT",
+                    data:JSON.stringify(jsonput),
+                    dataType: 'json',
+                    contentType:"application/json; charset=utf-8",
+                    processData:false,
+                    cache:false,
+                    success: function (res) {
+                        p=res.payload;
 //                    alert(p.shopid + "-----success")
 //
-                     alert("回---调---调---试");
-                     $('#myModal2').modal('toggle')
-                     remond('0',default_size,default_sort);
-                }
-            })
+                        alert("回---调---调---试");
+                        $('#myModal2').modal('toggle')
+                        remond('0',default_size,default_sort);
+                    }
+                })
             }
 //            alert("check()--调---试")
         }
 
+        function startTime()
+        {
+            var today=new Date()
+            var h=today.getHours()
+            var m=today.getMinutes()
+            var s=today.getSeconds()
+// add a zero in front of numbers<10
+            m=checkTime(m)
+            s=checkTime(s)
+            document.getElementById('txt').innerHTML="现在时间:<span class='glyphicon glyphicon-time'></span>&nbsp;"+ h+":"+m+":"+s
+//            document.getElementById('timeid').innerHTML="<span class='glyphicon glyphicon-time'></span>&nbsp;"+ h+":"+m+":"+s
+            t=setTimeout('startTime()',500)
+        }
+
+        function checkTime(i)
+        {
+            if (i<10)
+            {i="0" + i}
+            return i
+        }
+        function back(){
+            window.history.back(-1);
+        }
 
 
     </script>
 
+
 </head>
-<body class="bjys" style="height:90%">
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand " href="#" style="padding-left: 35px">
-            <span class="glyphicon glyphicon-home navFont"><strong class=“systemTitle”> 广商淘-商品查看模块</strong></span>
-        </a>
-    </div>
-</nav>
-<!-- 右边详细内容 -->
-<div>
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">商品列表</h3>
-        </div>
-        <div>
-            <nav>
-                <ul class="pager">
-                    <li><a href="#" onclick=" return remond('0',default_size,default_sort) ">所有商品</a></li>
-                    <li><a href="#" onclick=" return remond('0',default_size,default_sort,'eq','shop_status',1) ">在售商品</a></li>
-                    <li><a href="#" onclick=" return remond('0',default_size,default_sort,'eq','shop_status',0) ">已售商品</a></li>
-                </ul>
-            </nav>
-        </div>
-        <div class="panel-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered" id="ShopTable">
 
-                    <tr>
-                        <th class="tableCenter">商品序号</th>
-                        <th class="tableCenter">商品名称</th>
-                        <th class="tableCenter">商品简介</th>
-                        <th class="tableCenter">商品价格(元)</th>
-                        <th class="tableCenter">商品状态</th>
-                        <th class="tableCenter">上传者</th>
-                        <th class="tableCenter">所属种类</th>
-                        <th class="tableCenter">操作</th>
-                    </tr>
-
-                </table>
-                <nav style="text-align: center">
-                    <ul id="pager" class="pagination pagination-lg pager">
-                        <%--<li class="disabled">--%>
-                            <%--<a href="#"  aria-label="Next">--%>
-                                <%--<span aria-hidden="true">首页</span>--%>
-                            <%--</a>--%>
-                        <%--</li>--%>
-                        <%--<li><a href="#">1</a></li>--%>
-                        <%--<li><a href="#">2</a></li>--%>
-                        <%--<li><a href="#">3</a></li>--%>
-                        <%--<li><a href="#">4</a></li>--%>
-                        <%--<li><a href="#">5</a></li>--%>
-
+<body onload="startTime(), remond('0',default_size,default_sort)">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span>GuangShangTao</span>Admin</a>
+            <ul class="user-menu">
+                <li class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <shiro:principal/> <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/thisuser"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href="/help"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                        <li><a href="${pageContext.request.contextPath }/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </ul>
-                </nav>
-
-            </div>
+                </li>
+            </ul>
         </div>
-        <hr><shiro:hasRole name="admin">
-        <div style="text-align: center">
-            如果您需要打印shop表单，请点击右边的按钮：<br/>admin角色登录显示此内容
-            <input type="button" class="btn btn-primary addUserAndDishes" value="导出excel" onclick="download()" />
-        </div></shiro:hasRole>
-    </div>
-    <div style="height:1px;width: 100%;background: #CCC;margin-bottom: 10px"></div>
-    <footer>
-        <p>&copy; ${ORDER_SYS_NAME}-广商淘-后台管理系统</p>
-    </footer>
-</div>
-</div>
-<!-- 将外部文件引入放在最后面这里更多为了提高用户体验，不必像传统的放前面后必须加载完后页面才显示内容，延缓了页面响应 -->
-<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+    <form role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+        </div>
+    </form>
+    <ul class="nav menu">
+        <li ><a href="/testtubiao"><span class="glyphicon glyphicon-dashboard"></span> 数据统计</a></li>
+        <li class="active"><a href="/shopmain"><span class="glyphicon glyphicon-shopping-cart"></span> 商品操作</a></li>
+        <li><a href="/usermain"><span class="glyphicon glyphicon-user"></span> 用户操作</a></li>
+        <li><a href="/ordermain"><span class="glyphicon glyphicon-list-alt"></span> 订单操作</a></li>
+        <li><a href="/messagesmain"><span class="glyphicon glyphicon-comment"></span> 评论操作</a></li>
+        <li class="parent ">
+            <a href="#">
+                <span class="glyphicon glyphicon-thumbs-up"></span> 友情链接 <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="glyphicon glyphicon-s glyphicon-plus"></em></span>
+            </a>
+            <ul class="children collapse" id="sub-item-1">
+                <li>
+                    <a class=""  href="http://101.200.56.75/"  >
+                        <span class="glyphicon glyphicon-hand-right"></span> kong-api-gateway
+                    </a>
+                </li>
+                <li>
+                    <a class=""  href="http://www.gzcc.cn/" >
+                        <span class="glyphicon glyphicon-hand-right"></span> 广州商学院
+                    </a>
+                </li>
+                <%--<li>--%>
+                    <%--<a class=""  href="http://101.200.56.75/order/file"  >--%>
+                        <%--<span class="glyphicon glyphicon-circle-arrow-down"></span> 订单 Excel--%>
+                    <%--</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                    <%--<a class=""  href="http://101.200.56.75/messages/file" >--%>
+                        <%--<span class="glyphicon glyphicon-circle-arrow-down"></span> 评论 Excel--%>
+                    <%--</a>--%>
+                <%--</li>--%>
+            </ul>
+        </li>
+        <li role="presentation" class="divider"></li>
+        <li><a href="${pageContext.request.contextPath }/logout"><span class="glyphicon glyphicon-user"></span> Login Out</a></li>
+    </ul>
+</div><!--/.sidebar-->
 
 
-<%--查看商品详情的模态框--%>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">详细信息</h4>
-            </div>
-            <div class="modal-body">
-                <div class="panel panel-primary" style="margin-top: 10px">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">商品详情</h3>
-                    </div>
-                    <div class="panel-body">
 
 
-                        <p>
-                        <h2 style="text-align: center;">
-                            商品id： <span id="shopid"></span>
-                        </h2>
-                        <h3 style="text-align: center;">
-                            <span style="color: red;font-weight: bold;" id="recommend"></span>
-                        </h3>
-                        <hr/>
-                        <p>
-                        <h3>
-                            商品名称：
-                        </h3>
-                        <p><span id="ShopName"></span></p>
-                        <h3>
-                           上传者名字：
-                        </h3>
-                        <p><span id="userName0"></span></p>
-                        <h3>
-                            上传者电话：
-                        </h3>
-                        <p><span id="userphne0"></span></p>
-                        <h3>
-                            商品状态：
-                        </h3>
-                        <p><span id="shop_status"></span></p>
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li> [<a href="/indexmain"><span class='glyphicon glyphicon-home'></span>&nbsp;主页</a>]</li>
+            <li class="active">Shop</li>
+            <li> [<a href="/time" id="txt"> </a>]</li>
+            <li>[<a href="#" onclick="back()"><span class='glyphicon glyphicon-share-alt'></span>&nbsp;返回 </a> ]</li>
+            <li> [ <a href="/help" ><span class='glyphicon glyphicon-question-sign'></span>&nbsp;帮助</a>]</li>
+            <li> [<a href="/thisuser"><span class='glyphicon glyphicon-user'></span>&nbsp;用户</a>]&nbsp;&nbsp;</li>
+        </ol>
+    </div><!--/.row-->
 
-                        <h3>商品简介：</h3>
-                        <p>
-                            <span id="Des"></span>
-                        </p>
-                        <h3>商品图片：</h3>
-                        <p>
-                            <span id="picture0"></span>
-                        </p>
-                        <h3>
-                            商品价格： <span id="price"> </span> (元)
-                        </h3>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">ShopTable</h1>
+        </div>
+    </div><!--/.row-->
+
+    <%--<div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >网页模板</a></div>--%>
+
+    <div class="row">
+        <div>
+            <div class="panel panel-info">
+                <div>
+                    <nav>
+                        <ul class="pager">
+                            <li><a href="#" onclick=" return remond('0',default_size,default_sort) ">所有商品</a></li>
+                            <li><a href="#" onclick=" return remond('0',default_size,default_sort,'eq','shop_status',1) ">在售商品</a></li>
+                            <li><a href="#" onclick=" return remond('0',default_size,default_sort,'eq','shop_status',0) ">已售商品</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered" id="ShopTable">
+
+                            <tr>
+                                <th class="tableCenter">商品序号</th>
+                                <th class="tableCenter">商品名称</th>
+                                <th class="tableCenter">商品简介</th>
+                                <th class="tableCenter">商品价格(元)</th>
+                                <th class="tableCenter">商品状态</th>
+                                <th class="tableCenter">上传者</th>
+                                <th class="tableCenter">所属种类</th>
+                                <th class="tableCenter">操作</th>
+                            </tr>
+
+                        </table>
+                        <nav style="text-align: center">
+                            <ul id="pager" class="pagination pagination-lg pager">
+                                <%--<li class="disabled">--%>
+                                <%--<a href="#"  aria-label="Next">--%>
+                                <%--<span aria-hidden="true">首页</span>--%>
+                                <%--</a>--%>
+                                <%--</li>--%>
+                                <%--<li><a href="#">1</a></li>--%>
+                                <%--<li><a href="#">2</a></li>--%>
+                                <%--<li><a href="#">3</a></li>--%>
+                                <%--<li><a href="#">4</a></li>--%>
+                                <%--<li><a href="#">5</a></li>--%>
+
+                            </ul>
+                        </nav>
+
                     </div>
                 </div>
+                <hr><shiro:hasRole name="admin">
+                <div style="text-align: center">
+                    如果您需要打印shop表单，请点击右边的按钮：<br/>admin角色登录显示此内容
+                    <input type="button" class="btn btn-primary addUserAndDishes" value="导出excel" onclick="download()" />
+                </div></shiro:hasRole>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary addUserAndDishes" data-dismiss="modal">关闭</button>
+            <div style="height:1px;width: 100%;background: #CCC;margin-bottom: 10px"></div>
+            <footer>
+                <p>&copy; ${ORDER_SYS_NAME}-广商淘-后台管理系统</p>
+            </footer>
+        </div>
+    </div>
+    <!-- 将外部文件引入放在最后面这里更多为了提高用户体验，不必像传统的放前面后必须加载完后页面才显示内容，延缓了页面响应 -->
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+
+    <%--查看商品详情的模态框--%>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">详细信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-primary" style="margin-top: 10px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">商品详情</h3>
+                        </div>
+                        <div class="panel-body">
+
+
+                            <p>
+                            <h2 style="text-align: center;">
+                                商品id： <span id="shopid"></span>
+                            </h2>
+                            <h3 style="text-align: center;">
+                                <span style="color: red;font-weight: bold;" id="recommend"></span>
+                            </h3>
+                            <hr/>
+                            <p>
+                            <h3>
+                                商品名称：
+                            </h3>
+                            <p><span id="ShopName"></span></p>
+                            <h3>
+                                上传者名字：
+                            </h3>
+                            <p><span id="userName0"></span></p>
+                            <h3>
+                                上传者电话：
+                            </h3>
+                            <p><span id="userphne0"></span></p>
+                            <h3>
+                                商品状态：
+                            </h3>
+                            <p><span id="shop_status"></span></p>
+
+                            <h3>商品简介：</h3>
+                            <p>
+                                <span id="Des"></span>
+                            </p>
+                            <h3>商品图片：</h3>
+                            <p>
+                                <span id="picture0"></span>
+                            </p>
+                            <h3>
+                                商品价格： <span id="price"> </span> (元)
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary addUserAndDishes" data-dismiss="modal">关闭</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<%--修改商品详情的模态框--%>
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel2">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel2">修改弹窗</h4>
-            </div>
-            <div class="modal-body" name="mydiv">
-                <div class="panel panel-primary" style="margin-top: 10px">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">商品修改</h3>
-                    </div>
-                    <div class="panel-body">
+    <%--修改商品详情的模态框--%>
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">修改弹窗</h4>
+                </div>
+                <div class="modal-body" name="mydiv">
+                    <div class="panel panel-primary" style="margin-top: 10px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">商品修改</h3>
+                        </div>
+                        <div class="panel-body">
 
-                        <p>
-                        <h2 style="text-align: center;">
-                            商品id： <span id="shopid2"></span>
-                        </h2>
+                            <p>
+                            <h2 style="text-align: center;">
+                                商品id： <span id="shopid2"></span>
+                            </h2>
 
-                        <form class="form-horizontal" name="amendShopesForm" id="amendShopesForm" role="form"
-                              style="margin-top: 20px"
-                              method="get">
+                            <form class="form-horizontal" name="amendShopesForm" id="amendShopesForm" role="form"
+                                  style="margin-top: 20px"
+                                  method="get">
 
-                            <div class="form-group">
-                                <label for="shopesName"
-                                       class="col-sm-2 control-label">名&nbsp;&nbsp;&nbsp;&nbsp;称:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="shopesName"
-                                           value="  "
-                                           size="20" name="shopesName" placeholder="请输入商品名称">
+                                <div class="form-group">
+                                    <label for="shopesName"
+                                           class="col-sm-2 control-label">名&nbsp;&nbsp;&nbsp;&nbsp;称:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="shopesName"
+                                               value="  "
+                                               size="20" name="shopesName" placeholder="请输入商品名称">
+                                    </div>
+                                    <div style="color: red;float: right;" id="nameerror"></div>
                                 </div>
-                                <div style="color: red;float: right;" id="nameerror"></div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="userName"
-                                       class="col-sm-2 control-label">用&nbsp;&nbsp;户&nbsp;&nbsp;名:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="userName"
-                                           value="  "
-                                           name="userName" placeholder="请输入上传的用户名">
+                                <div class="form-group">
+                                    <label for="userName"
+                                           class="col-sm-2 control-label">用&nbsp;&nbsp;户&nbsp;&nbsp;名:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="userName"
+                                               value="  "
+                                               name="userName" placeholder="请输入上传的用户名">
+                                    </div>
                                 </div>
-                            </div>
 
 
-                            <div class="form-group">
-                                <label for="_des"
-                                       class="col-sm-2 control-label">说&nbsp;&nbsp;&nbsp;&nbsp;明:</label>
-                                <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label for="_des"
+                                           class="col-sm-2 control-label">说&nbsp;&nbsp;&nbsp;&nbsp;明:</label>
+                                    <div class="col-sm-10">
                                 <textarea rows="8" class="form-control" id="_des"
                                           name="_des"></textarea>
+                                    </div>
+                                    <div style="color: red;float: right;" id="passerror"></div>
                                 </div>
-                                <div style="color: red;float: right;" id="passerror"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="shopesPrice"
-                                       class="col-sm-2 control-label">价&nbsp;&nbsp;&nbsp;&nbsp;格:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="shopesPrice" name="shopesPrice"
-                                           placeholder="请输入商品价格" value=""
-                                    >
+                                <div class="form-group">
+                                    <label for="shopesPrice"
+                                           class="col-sm-2 control-label">价&nbsp;&nbsp;&nbsp;&nbsp;格:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="shopesPrice" name="shopesPrice"
+                                               placeholder="请输入商品价格" value=""
+                                        >
+                                    </div>
+                                    <div style="color: red;float: right;"></div>
                                 </div>
-                                <div style="color: red;float: right;"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="shopesPrice"
-                                       class="col-sm-2 control-label">电&nbsp;&nbsp;&nbsp;&nbsp;话:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="userphne" name="userphne"
-                                           placeholder="请输入userphne" value=""
-                                    >
+                                <div class="form-group">
+                                    <label for="shopesPrice"
+                                           class="col-sm-2 control-label">电&nbsp;&nbsp;&nbsp;&nbsp;话:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="userphne" name="userphne"
+                                               placeholder="请输入userphne" value=""
+                                        >
+                                    </div>
+                                    <div style="color: red;float: right;"></div>
                                 </div>
-                                <div style="color: red;float: right;"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="picture"
-                                       class="col-sm-2 control-label">图&nbsp;&nbsp;&nbsp;&nbsp;片:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="picture" name="picture"
-                                           placeholder="请输入picture" value="" readonly>
+                                <div class="form-group">
+                                    <label for="picture"
+                                           class="col-sm-2 control-label">图&nbsp;&nbsp;&nbsp;&nbsp;片:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="picture" name="picture"
+                                               placeholder="请输入picture" value="" readonly>
+                                    </div>
+                                    <div style="color: red;float: right;">图片由前端指定后，不能修改</div>
                                 </div>
-                                <div style="color: red;float: right;">图片由前端指定后，不能修改</div>
-                            </div>
-                            <div class="form-group">
-                                <label for="categoryid"
-                                       class="col-sm-2 control-label">种&nbsp;&nbsp;&nbsp;&nbsp;类:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="categoryid" name="categoryid"
-                                           placeholder="请从下面选择categoryid" value=""
-                                    >
-                                    <select name="s1" onchange="ch3()">
-                                        <option value="" selected="selected">请选择</option>
-                                        <option value=1>运动</option>
+                                <div class="form-group">
+                                    <label for="categoryid"
+                                           class="col-sm-2 control-label">种&nbsp;&nbsp;&nbsp;&nbsp;类:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="categoryid" name="categoryid"
+                                               placeholder="请从下面选择categoryid" value=""
+                                        >
+                                        <select name="s1" onchange="ch3()">
+                                            <option value="" selected="selected">请选择</option>
+                                            <option value=1>运动</option>
 
-                                        <option value=2>电子</option>
-                                        <option value=3>书籍</option>
-                                        <option value=4>食物</option>
-                                    </select>
+                                            <option value=2>电子</option>
+                                            <option value=3>书籍</option>
+                                            <option value=4>食物</option>
+                                        </select>
 
-                                    <script type="text/javascript">
-                                        function ch3(){
-                                            var s1 = document.getElementsByName("s1")[0];
-                                            $("#categoryid").val(s1.value);
-                                            alert('you choice:' + s1.value);
-                                        }
-                                    </script>
+                                        <script type="text/javascript">
+                                            function ch3(){
+                                                var s1 = document.getElementsByName("s1")[0];
+                                                $("#categoryid").val(s1.value);
+                                                alert('you choice:' + s1.value);
+                                            }
+                                        </script>
+                                    </div>
+
+                                    <div style="color: red;float: right;"></div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="shop_status2"
+                                           class="col-sm-2 control-label">状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="shop_status2" name="shop_status2"
+                                               placeholder="请从下面选择shop_status2" value=""
+                                        >
+                                        <select name="s2" onchange="ch2()">
+                                            <option value="" selected="selected">请选择状态</option>
+                                            <option value=0>0代表下架</option>
+                                            <option value=1>1代表上架</option>
+                                        </select>
 
-                                <div style="color: red;float: right;"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="shop_status2"
-                                       class="col-sm-2 control-label">状&nbsp;&nbsp;&nbsp;&nbsp;态:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="shop_status2" name="shop_status2"
-                                           placeholder="请从下面选择shop_status2" value=""
-                                    >
-                                    <select name="s2" onchange="ch2()">
-                                        <option value="" selected="selected">请选择状态</option>
-                                        <option value=0>0代表下架</option>
-                                        <option value=1>1代表上架</option>
-                                    </select>
+                                        <script type="text/javascript">
+                                            function ch2(){
+                                                var s2 = document.getElementsByName("s2")[0];
+                                                $("#shop_status2").val(s2.value);
+                                                alert('you choice:' + s2.value);
+                                            }
+                                        </script>
+                                    </div>
 
-                                    <script type="text/javascript">
-                                        function ch2(){
-                                            var s2 = document.getElementsByName("s2")[0];
-                                            $("#shop_status2").val(s2.value);
-                                            alert('you choice:' + s2.value);
-                                        }
-                                    </script>
+                                    <div style="color: red;float: right;"></div>
                                 </div>
-
-                                <div style="color: red;float: right;"></div>
-                            </div>
-                            <%--<input type="hidden" value="<%=request.getParameter("id")%>" id="dishesId" name="dishesId"/>--%>
-                            <%--<input type="hidden" value="<%=request.getParameter("dishesImg")%>" id="dishesImg"--%>
-                            <%--name="dishesImg"/>--%>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <input type="button" class="btn btn-primary" id="addbtu" value="确认修改"
-                                           onclick="check()"/>
+                                <%--<input type="hidden" value="<%=request.getParameter("id")%>" id="dishesId" name="dishesId"/>--%>
+                                <%--<input type="hidden" value="<%=request.getParameter("dishesImg")%>" id="dishesImg"--%>
+                                <%--name="dishesImg"/>--%>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <input type="button" class="btn btn-primary" id="addbtu" value="确认修改"
+                                               onclick="check()"/>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary addUserAndDishes" data-dismiss="modal">关闭</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary addUserAndDishes" data-dismiss="modal">关闭</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+
 
 
 </body>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+<%--<script src="js/jquery-1.11.1.min.js"></script>--%>
+<script src="js/bootstrap.min.js"></script>
+<%--<script src="js/chart.min.js"></script>--%>
+<%--<script src="js/chart-data.js"></script>--%>
+<script src="js/easypiechart.js"></script>
+<script src="js/easypiechart-data.js"></script>
+<script src="js/bootstrap-datepicker.js"></script>
 
 </html>
-
